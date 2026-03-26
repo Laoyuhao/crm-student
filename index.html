@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>学生课时管理系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+            background: #f5f6fa;
+            min-height: 100vh;
+        }
+
+        /* ===== 登录页 ===== */
+        #loginPage {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .login-logo {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .form-item {
+            margin-bottom: 16px;
+        }
+
+        .form-item label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .form-item input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-item input:focus {
+            border-color: #667eea;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .login-btn:active { opacity: 0.85; }
+
+        .login-error {
+            color: #e74c3c;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+
+        .login-hint {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .login-hint strong { color: #667eea; }
+
+        /* ===== 主应用 ===== */
+        #appPage { display: none; }
+
+        /* 顶部导航 */
+        .topbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(102,126,234,0.4);
+        }
+
+        .topbar-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .topbar-user {
+            font-size: 13px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* 操作按钮区 */
+        .action-bar {
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-voice {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245,87,108,0.35);
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79,172,254,0.35);
+        }
+
+        /* 搜索栏 */
+        .search-wrap {
+            padding: 0 16px 12px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        .search-input:focus { border-color: #667eea; }
+
+        /* 统计卡片 */
+        .stats-row {
+            display: flex;
+            gap: 10px;
+            padding: 0 16px 16px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: white;
+            border-radius: 14px;
+            padding: 14px 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .stat-num {
+            font-size: 26px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        /* 学生列表 */
+        .students-list {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 30px;
+        }
+
+        .student-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .student-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .student-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .student-phone {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .course-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .course-tag {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .tag-ok {
+            background: #e8f8f0;
+            color: #27ae60;
+        }
+
+        .tag-low {
+            background: #fff3e0;
+            color: #e67e22;
+        }
+
+        .tag-empty {
+            background: #fdecea;
+            color: #e74c3c;
+        }
+
+        .empty-tip {
+            text-align: center;
+            padding: 60px 20px;
+            color: #bbb;
+            font-size: 15px;
+        }
+
+        /* ===== 弹窗通用 ===== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .sheet {
+            background: white;
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 20px;
+            animation: slideUp 0.25s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+
+        .sheet-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 20px;
+        }
+
+        .sheet-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .sheet-input:focus { border-color: #667eea; }
+
+        .sheet-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .sheet-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .sheet-btn-cancel {
+            background: #f5f6fa;
+            color: #666;
+        }
+
+        /* 语音弹窗 */
+        .voice-hint {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .voice-hint strong { color: #667eea; }
+
+        .voice-result-box {
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .voice-result-box.success {
+            background: #e8f8f0;
+            color: #27ae60;
+            display: block;
+        }
+
+        .voice-result-box.error {
+            background: #fdecea;
+            color: #e74c3c;
+            display: block;
+        }
+
+        /* 添加学生弹窗 */
+        .course-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .course-row input { flex: 1; margin-bottom: 0; }
+
+        .del-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #fdecea;
+            color: #e74c3c;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .add-course-link {
+            color: #667eea;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        /* 学生详情弹窗 */
+        .detail-course-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .detail-course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .detail-course-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .detail-course-hours {
+            font-size: 15px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .deduct-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .deduct-row input {
+            width: 70px;
+            padding: 8px 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            text-align: center;
+            outline: none;
+        }
+
+        .deduct-btn {
+            flex: 1;
+            padding: 10px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .history-item:last-child { border-bottom: none; }
+
+        .history-deduct { color: #e74c3c; font-weight: 600; }
+        .history-add { color: #27ae60; font-weight: 600; }
+        .history-date { color: #999; font-size: 12px; }
+
+        .hidden { display: none !important; }
+
+        /* Toast 提示 */
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.75);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 15px;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .toast.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== 登录页 ===== -->
+<div id="loginPage">
+    <div class="login-box">
+        <div class="login-logo">📚</div>
+        <div class="login-title">课时管理系统</div>
+        <div class="login-subtitle">老师专用 · 安全登录</div>
+
+        <div class="form-item">
+            <label>账号</label>
+            <input type="text" id="loginUser" placeholder="请输入账号" autocomplete="username">
+        </div>
+        <div class="form-item">
+            <label>密码</label>
+            <input type="password" id="loginPass" placeholder="请输入密码" autocomplete="current-password">
+        </div>
+        <button class="login-btn" onclick="doLogin()">登 录</button>
+        <div class="login-error" id="loginError"></div>
+
+        <div class="login-hint">
+            <strong>演示账号：</strong><br>
+            管理员：admin / admin123<br>
+            老师A：teacher1 / 123456<br>
+            老师B：teacher2 / 123456
+        </div>
+    </div>
+</div>
+
+<!-- ===== 主应用 ===== -->
+<div id="appPage">
+    <div class="topbar">
+        <div class="topbar-title">📚 课时管理</div>
+        <div class="topbar-user">
+            <span id="currentUserName"></span>
+            <button class="logout-btn" onclick="doLogout()">退出</button>
+        </div>
+    </div>
+
+    <div class="action-bar">
+        <button class="btn btn-voice" onclick="openVoice()">🎤 语音销课</button>
+        <button class="btn btn-add" onclick="openAddStudent()">➕ 添加学生</button>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-num" id="statTotal">0</div>
+            <div class="stat-label">学生总数</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="statToday">0</div>
+            <div class="stat-label">今日销课</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-num" id="statMonth">0</div>
+            <div class="stat-label">本月销课</div>
+        </div>
+    </div>
+
+    <div class="search-wrap">
+        <input class="search-input" id="searchInput" placeholder="🔍 搜索学生姓名..." oninput="renderStudents()">
+    </div>
+
+    <div class="students-list" id="studentsList"></div>
+</div>
+
+<!-- ===== 语音销课弹窗 ===== -->
+<div class="overlay hidden" id="voiceOverlay" onclick="closeVoice(event)">
+    <div class="sheet" onclick="event.stopPropagation()">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">🎤 语音销课</div>
+        <div class="voice-hint">
+            支持自然语言，例如：<br>
+            <strong>「张三销2节数学课」</strong><br>
+            <strong>「李四上了一次英语课」</strong><br>
+            <strong>「王五增加3节物理课」</strong>
+        </div>
+        <div class="voice-result-box" id="voiceResult"></div>
+        <input class="sheet-input" id="voiceInput" placeholder="输入销课指令，按回车确认" onkeypress="if(event.key==='Enter')processVoice()">
+        <button class="sheet-btn sheet-btn-primary" onclick="processVoice()">✅ 确认销课</button>
+        <button class="sheet-btn sheet-btn-cancel" onclick="closeVoice()">取消</button>
+    </div>
+</div>
+
+<!-- ===== 添加学生弹窗 ===== -->
+<div class="overlay hidden" id="addOverlay" onclick="closeAdd(event)">
+    <div class="sheet" onclick="event.stopPropagation()">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title">➕ 添加学生</div>
+        <input class="sheet-input" id="newName" placeholder="学生姓名（必填）">
+        <input class="sheet-input" id="newPhone" placeholder="联系电话（选填）">
+        <div style="font-size:14px;color:#555;margin-bottom:10px;font-weight:500;">课程包</div>
+        <div id="courseRows">
+            <div class="course-row">
+                <input class="sheet-input course-name" placeholder="课程名称（如：数学）">
+                <input class="sheet-input course-hours" type="number" placeholder="课时" min="1">
+            </div>
+        </div>
+        <span class="add-course-link" onclick="addCourseRow()">＋ 添加课程</span>
+        <input class="sheet-input" id="newNotes" placeholder="备注（选填）">
+        <button class="sheet-btn sheet-btn-primary" onclick="saveStudent()">保存学生</button>
+        <button class="sheet-btn sheet-btn-cancel" onclick="closeAdd()">取消</button>
+    </div>
+</div>
+
+<!-- ===== 学生详情弹窗 ===== -->
+<div class="overlay hidden" id="detailOverlay" onclick="closeDetail(event)">
+    <div class="sheet" onclick="event.stopPropagation()">
+        <div class="sheet-handle"></div>
+        <div id="detailContent"></div>
+    </div>
+</div>
+
+<script>
+// ==================== 账号系统 ====================
+const ACCOUNTS = {
+    'admin':    { password: 'admin123', name: '管理员', role: 'admin' },
+    'teacher1': { password: '123456',   name: '王老师', role: 'teacher' },
+    'teacher2': { password: '123456',   name: '李老师', role: 'teacher' },
+};
+
+let currentUser = null;
+
+function doLogin() {
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    const err  = document.getElementById('loginError');
+
+    if (!user || !pass) { err.textContent = '请输入账号和密码'; return; }
+
+    const account = ACCOUNTS[user];
+    if (!account || account.password !== pass) {
+        err.textContent = '账号或密码错误，请重试';
+        return;
+    }
+
+    currentUser = { username: user, ...account };
+    sessionStorage.setItem('crm_user', JSON.stringify(currentUser));
+
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('appPage').style.display = 'block';
+    document.getElementById('currentUserName').textContent = account.name;
+    err.textContent = '';
+
+    renderStudents();
+    updateStats();
+}
+
+function doLogout() {
+    currentUser = null;
+    sessionStorage.removeItem('crm_user');
+    document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('appPage').style.display = 'none';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+}
+
+// 回车登录
+document.getElementById('loginPass').addEventListener('keypress', e => {
+    if (e.key === 'Enter') doLogin();
+});
+
+// 自动恢复登录
+(function() {
+    const saved = sessionStorage.getItem('crm_user');
+    if (saved) {
+        currentUser = JSON.parse(saved);
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('appPage').style.display = 'block';
+        document.getElementById('currentUserName').textContent = currentUser.name;
+    }
+})();
+
+// ==================== 数据层 ====================
+function loadStudents() {
+    return JSON.parse(localStorage.getItem('crm_students') || '[]');
+}
+
+function saveStudents(list) {
+    localStorage.setItem('crm_students', JSON.stringify(list));
+}
+
+// ==================== Toast ====================
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ==================== 渲染学生列表 ====================
+function renderStudents() {
+    const list = loadStudents();
+    const kw   = document.getElementById('searchInput').value.trim();
+    const el   = document.getElementById('studentsList');
+
+    const filtered = kw ? list.filter(s => s.name.includes(kw)) : list;
+
+    if (filtered.length === 0) {
+        el.innerHTML = `<div class="empty-tip">暂无学生，点击「添加学生」开始吧 🎉</div>`;
+        return;
+    }
+
+    el.innerHTML = filtered.map(s => {
+        const tags = s.courses.map(c => {
+            const cls = c.remaining > 3 ? 'tag-ok' : c.remaining > 0 ? 'tag-low' : 'tag-empty';
+            return `<span class="course-tag ${cls}">${c.name} ${c.remaining}节</span>`;
+        }).join('');
+
+        return `
+        <div class="student-card" onclick="openDetail(${s.id})">
+            <div class="card-header">
+                <span class="student-name">${s.name}</span>
+                <span class="student-phone">${s.phone || ''}</span>
+            </div>
+            <div class="course-tags">${tags}</div>
+        </div>`;
+    }).join('');
+}
+
+// ==================== 统计 ====================
+function updateStats() {
+    const list  = loadStudents();
+    const today = new Date().toDateString();
+    const now   = new Date();
+    const mStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    let todayN = 0, monthN = 0;
+    list.forEach(s => s.courses.forEach(c => c.history.forEach(h => {
+        if (h.type === 'deduct') {
+            const d = new Date(h.date);
+            if (d.toDateString() === today) todayN += h.hours;
+            if (d >= mStart) monthN += h.hours;
+        }
+    })));
+
+    document.getElementById('statTotal').textContent = list.length;
+    document.getElementById('statToday').textContent = todayN;
+    document.getElementById('statMonth').textContent = monthN;
+}
+
+// ==================== 语音销课 ====================
+function openVoice() {
+    document.getElementById('voiceOverlay').classList.remove('hidden');
+    document.getElementById('voiceInput').value = '';
+    document.getElementById('voiceResult').className = 'voice-result-box';
+    document.getElementById('voiceResult').textContent = '';
+    setTimeout(() => document.getElementById('voiceInput').focus(), 300);
+}
+
+function closeVoice(e) {
+    if (!e || e.target === document.getElementById('voiceOverlay')) {
+        document.getElementById('voiceOverlay').classList.add('hidden');
+    }
+}
+
+function processVoice() {
+    const text = document.getElementById('voiceInput').value.trim();
+    if (!text) { showToast('请输入销课指令'); return; }
+
+    const result = parseAndExecute(text);
+    const box = document.getElementById('voiceResult');
+    box.textContent = result.message;
+    box.className = 'voice-result-box ' + (result.success ? 'success' : 'error');
+
+    if (result.success) {
+        document.getElementById('voiceInput').value = '';
+        renderStudents();
+        updateStats();
+        setTimeout(closeVoice, 1500);
+    }
+}
+
+function parseAndExecute(text) {
+    // 解析自然语言
+    const deductPattern = /(.+?)(?:销|扣|上了?|消)(\d+)[节次](.+?)课?$/;
+    const addPattern    = /(.+?)(?:增加|补充|加)(\d+)[节次](.+?)课?$/;
+
+    let match, isAdd = false;
+
+    match = text.match(addPattern);
+    if (match) isAdd = true;
+    else match = text.match(deductPattern);
+
+    if (!match) {
+        return { success: false, message: '❌ 无法识别，请用格式：张三销2节数学课' };
+    }
+
+    const studentName = match[1].trim();
+    const hours       = parseInt(match[2]);
+    const courseName  = match[3].trim();
+
+    const list    = loadStudents();
+    const student = list.find(s => s.name === studentName);
+    if (!student) return { success: false, message: `❌ 找不到学生「${studentName}」` };
+
+    const course = student.courses.find(c => c.name === courseName);
+    if (!course) return { success: false, message: `❌ 「${studentName}」没有「${courseName}」课程` };
+
+    if (!isAdd && course.remaining < hours) {
+        return { success: false, message: `❌ 课时不足，「${courseName}」仅剩 ${course.remaining} 节` };
+    }
+
+    if (isAdd) {
+        course.remaining += hours;
+        course.total     += hours;
+    } else {
+        course.remaining -= hours;
+    }
+
+    course.history.push({
+        date: new Date().toISOString(),
+        hours,
+        type: isAdd ? 'add' : 'deduct',
+        operator: currentUser ? currentUser.name : '未知',
+        note: text
+    });
+
+    student.lastVisit = new Date().toISOString();
+    saveStudents(list);
+
+    const action = isAdd ? '增加' : '销课';
+    return {
+        success: true,
+        message: `✅ ${studentName} · ${courseName} ${action} ${hours} 节，剩余 ${course.remaining} 节`
+    };
+}
+
+// ==================== 添加学生 ====================
+function openAddStudent() {
+    document.getElementById('addOverlay').classList.remove('hidden');
+    document.getElementById('newName').value = '';
+    document.getElementById('newPhone').value = '';
+    document.getElementById('newNotes').value = '';
+    document.getElementById('courseRows').innerHTML = `
+        <div class="course-row">
+            <input class="sheet-input course-name" placeholder="课程名称（如：数学）">
+            <input class="sheet-input course-hours" type="number" placeholder="课时" min="1">
+        </div>`;
+}
+
+function closeAdd(e) {
+    if (!e || e.target === document.getElementById('addOverlay')) {
+        document.getElementById('addOverlay').classList.add('hidden');
+    }
+}
+
+function addCourseRow() {
+    const row = document.createElement('div');
+    row.className = 'course-row';
+    row.innerHTML = `
+        <input class="sheet-input course-name" placeholder="课程名称">
+        <input class="sheet-input course-hours" type="number" placeholder="课时" min="1">
+        <button class="del-btn" onclick="this.parentElement.remove()">×</button>`;
+    document.getElementById('courseRows').appendChild(row);
+}
+
+function saveStudent() {
+    const name  = document.getElementById('newName').value.trim();
+    const phone = document.getElementById('newPhone').value.trim();
+    const notes = document.getElementById('newNotes').value.trim();
+
+    if (!name) { showToast('请输入学生姓名'); return; }
+
+    const courses = [];
+    document.querySelectorAll('.course-row').forEach(row => {
+        const n = row.querySelector('.course-name').value.trim();
+        const h = parseInt(row.querySelector('.course-hours').value) || 0;
+        if (n && h > 0) courses.push({ name: n, total: h, remaining: h, history: [] });
+    });
+
+    if (courses.length === 0) { showToast('请至少添加一个课程'); return; }
+
+    const list = loadStudents();
+    list.push({
+        id: Date.now(),
+        name, phone, notes,
+        courses,
+        createdAt: new Date().toISOString(),
+        lastVisit: null
+    });
+    saveStudents(list);
+
+    closeAdd();
+    renderStudents();
+    updateStats();
+    showToast(`✅ 已添加学生「${name}」`);
+}
+
+// ==================== 学生详情 ====================
+function openDetail(id) {
+    const list    = loadStudents();
+    const student = list.find(s => s.id === id);
+    if (!student) return;
+
+    const coursesHtml = student.courses.map(c => {
+        const recentHistory = c.history.slice(-5).reverse().map(h => `
+            <div class="history-item">
+                <span class="${h.type === 'deduct' ? 'history-deduct' : 'history-add'}">
+                    ${h.type === 'deduct' ? '▼ 销课' : '▲ 增加'} ${h.hours}节
+                </span>
+                <span class="history-date">${new Date(h.date).toLocaleString('zh-CN', {month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})}</span>
+            </div>`).join('');
+
+        return `
+        <div class="detail-course-item">
+            <div class="detail-course-header">
+                <span class="detail-course-name">${c.name}</span>
+                <span class="detail-course-hours">${c.remaining}/${c.total} 节</span>
+            </div>
+            <div class="deduct-row">
+                <input type="number" value="1" min="1" max="${c.remaining}" id="dh-${id}-${c.name}">
+                <button class="deduct-btn" onclick="quickDeduct(${id},'${c.name}')">销课</button>
+            </div>
+            ${recentHistory ? `<div style="margin-top:10px">${recentHistory}</div>` : ''}
+        </div>`;
+    }).join('');
+
+    document.getElementById('detailContent').innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <div>
+                <div style="font-size:22px;font-weight:700;color:#222">${student.name}</div>
+                <div style="color:#999;font-size:14px;margin-top:4px">${student.phone || '无联系方式'}</div>
+            </div>
+            <button onclick="deleteStudent(${id})" style="background:#fdecea;color:#e74c3c;border:none;padding:8px 14px;border-radius:10px;font-size:14px;cursor:pointer">删除</button>
+        </div>
+        <div style="font-size:16px;font-weight:600;color:#333;margin-bottom:12px">课程详情</div>
+        ${coursesHtml}
+    `;
+
+    document.getElementById('detailOverlay').classList.remove('hidden');
+}
+
+function closeDetail(e) {
+    if (!e || e.target === document.getElementById('detailOverlay')) {
+        document.getElementById('detailOverlay').classList.add('hidden');
+    }
+}
+
+function quickDeduct(studentId, courseName) {
+    const hours = parseInt(document.getElementById(`dh-${studentId}-${courseName}`).value) || 1;
+    const text  = `${loadStudents().find(s=>s.id===studentId)?.name}销${hours}节${courseName}课`;
+    const result = parseAndExecute(text);
+    showToast(result.message);
+    if (result.success) {
+        renderStudents();
+        updateStats();
+        openDetail(studentId);
+    }
+}
+
+function deleteStudent(id) {
+    if (!confirm('确定删除该学生吗？')) return;
+    const list = loadStudents().filter(s => s.id !== id);
+    saveStudents(list);
+    closeDetail();
+    renderStudents();
+    updateStats();
+    showToast('已删除');
+}
+
+// ==================== 初始化演示数据 ====================
+if (loadStudents().length === 0) {
+    const demo = [
+        { id: 1, name: '张三', phone: '13800138000', notes: '', createdAt: new Date().toISOString(), lastVisit: null,
+          courses: [
+            { name: '数学', total: 10, remaining: 8, history: [] },
+            { name: '英语', total: 8,  remaining: 5, history: [] }
+          ]},
+        { id: 2, name: '李四', phone: '13900139000', notes: '', createdAt: new Date().toISOString(), lastVisit: null,
+          courses: [
+            { name: '物理', total: 6, remaining: 2, history: [] }
+          ]},
+        { id: 3, name: '王五', phone: '', notes: '', createdAt: new Date().toISOString(), lastVisit: null,
+          courses: [
+            { name: '语文', total: 12, remaining: 0, history: [] }
+          ]},
+    ];
+    saveStudents(demo);
+}
+
+// 初始渲染
+if (currentUser) { renderStudents(); updateStats(); }
+</script>
+</body>
+</html>
