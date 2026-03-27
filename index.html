@@ -149,8 +149,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
       <div class="sc"><div class="sn" id="s-total">0</div><div class="sl">总课时</div></div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-g" onclick="showModal('modal-student')">+ 新增学员</button>
-      <button class="btn btn-b" onclick="showModal('modal-teacher')">+ 新增教师</button>
+      <button class="btn btn-g" onclick="openNewStudent()">+ 新增学员</button>
+      <button class="btn btn-b" onclick="openNewTeacher()">+ 新增教师</button>
     </div>
     <div class="sync-box">
       <h3>☁️ 云端同步</h3>
@@ -161,13 +161,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 
   <!-- ===== 管理员：学员课时管理 ===== -->
   <div class="page" id="page-students">
-    <div class="btn-row"><button class="btn btn-g" onclick="showModal('modal-student')">+ 新增学员</button></div>
+    <div class="btn-row"><button class="btn btn-g" onclick="openNewStudent()">+ 新增学员</button></div>
     <div id="students-list"></div>
   </div>
 
   <!-- ===== 管理员：教师管理 ===== -->
   <div class="page" id="page-teachers">
-    <div class="btn-row"><button class="btn btn-b" onclick="showModal('modal-teacher')">+ 新增教师</button></div>
+    <div class="btn-row"><button class="btn btn-b" onclick="openNewTeacher()">+ 新增教师</button></div>
     <div id="teachers-list"></div>
   </div>
 
@@ -199,26 +199,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 
 <!-- ===== 弹窗 ===== -->
 
-<!-- 新增学员 -->
+<!-- 新增/编辑学员 -->
 <div class="overlay hidden" id="modal-student">
   <div class="sheet">
     <div class="sh"></div>
-    <div class="st">新增学员</div>
+    <div class="st" id="modal-student-title">新增学员</div>
+    <input type="hidden" id="m-s-id">
     <div class="fg"><label>姓名</label><input class="fi" id="m-s-name" placeholder="学员姓名"></div>
     <div class="fg"><label>登录密码</label><input class="fi" id="m-s-pass" type="password" placeholder="留空默认123456"></div>
-    <button class="btn btn-g btn-block" onclick="addStudent()">保存</button>
+    <button class="btn btn-g btn-block" onclick="saveStudent()">保存</button>
+    <button class="btn btn-r btn-block" style="margin-top:8px" id="btn-del-student" onclick="deleteStudent()">删除学员</button>
     <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="hideModal('modal-student')">取消</button>
   </div>
 </div>
 
-<!-- 新增教师 -->
+<!-- 新增/编辑教师 -->
 <div class="overlay hidden" id="modal-teacher">
   <div class="sheet">
     <div class="sh"></div>
-    <div class="st">新增教师</div>
+    <div class="st" id="modal-teacher-title">新增教师</div>
+    <input type="hidden" id="m-t-id">
     <div class="fg"><label>姓名</label><input class="fi" id="m-t-name" placeholder="教师姓名"></div>
     <div class="fg"><label>登录密码</label><input class="fi" id="m-t-pass" type="password" placeholder="登录密码"></div>
-    <button class="btn btn-b btn-block" onclick="addTeacher()">保存</button>
+    <button class="btn btn-b btn-block" onclick="saveTeacher()">保存</button>
+    <button class="btn btn-r btn-block" style="margin-top:8px" id="btn-del-teacher" onclick="deleteTeacher()">删除教师</button>
     <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="hideModal('modal-teacher')">取消</button>
   </div>
 </div>
@@ -446,6 +450,7 @@ function renderStudents() {
       '</div>' +
       '<div class="ca">' +
         '<button class="btn btn-g btn-sm" onclick="openAssign(\'' + s.id + '\')">分配课时</button>' +
+        '<button class="btn btn-b btn-sm" onclick="editStudent(\'' + s.id + '\')">编辑</button>' +
       '</div>' +
       '<div class="assign-list">' + assignHtml + '</div>' +
     '</div>';
@@ -459,7 +464,6 @@ function renderTeachers() {
   if (!list.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">👩‍🏫</div><div class="empty-text">暂无教师</div></div>'; return; }
   
   el.innerHTML = list.map(function(t) {
-    // 统计该教师的学员数和课时数
     var stuCount = 0;
     var hoursCount = 0;
     for (var sid in DB.students) {
@@ -479,6 +483,7 @@ function renderTeachers() {
         '<span class="tag tag-b">' + stuCount + ' 位学员</span>' +
       '</div>' +
       '<div class="ci">剩余 ' + hoursCount + ' 课时待上</div>' +
+      '<div class="ca"><button class="btn btn-b btn-sm" onclick="editTeacher(\'' + t.id + '\')">编辑</button></div>' +
     '</div>';
   }).join('');
 }
@@ -488,8 +493,7 @@ function renderAccounts() {
   var el = document.getElementById('accounts-list');
   var list = Object.values(DB.accounts);
   
-  el.innerHTML = '<div style="margin-bottom:10px;font-size:13px;color:#888">点击可修改密码</div>' +
-  list.map(function(a) {
+  el.innerHTML = list.map(function(a) {
     var roleTag = a.role === 'admin' ? 'tag-r' : (a.role === 'teacher' ? 'tag-b' : 'tag-g');
     var roleName = a.role === 'admin' ? '管理员' : (a.role === 'teacher' ? '教师' : '学员');
     return '<div class="card">' +
@@ -546,42 +550,176 @@ async function saveAssign() {
   renderDash();
 }
 
-// ===== 新增学员 =====
-async function addStudent() {
+// ===== 新增/编辑学员 =====
+function openNewStudent() {
+  document.getElementById('modal-student-title').textContent = '新增学员';
+  document.getElementById('m-s-id').value = '';
+  document.getElementById('m-s-name').value = '';
+  document.getElementById('m-s-pass').value = '';
+  document.getElementById('btn-del-student').style.display = 'none';
+  showModal('modal-student');
+}
+
+function editStudent(sid) {
+  var s = DB.students[sid];
+  var acc = DB.accounts[sid];
+  document.getElementById('modal-student-title').textContent = '编辑学员';
+  document.getElementById('m-s-id').value = sid;
+  document.getElementById('m-s-name').value = s.name;
+  document.getElementById('m-s-pass').value = '';
+  document.getElementById('m-s-pass').placeholder = '留空不修改密码';
+  document.getElementById('btn-del-student').style.display = 'block';
+  showModal('modal-student');
+}
+
+async function saveStudent() {
+  var id = document.getElementById('m-s-id').value;
   var name = document.getElementById('m-s-name').value.trim();
-  var pass = document.getElementById('m-s-pass').value || '123456';
+  var pass = document.getElementById('m-s-pass').value;
+  
   if (!name) { toast('请输入姓名'); return; }
   
-  var id = 's' + Date.now();
-  DB.students[id] = { id: id, name: name, assignments: [] };
-  DB.accounts[id] = { id: id, username: name, password: pass, name: name, role: 'student' };
+  if (id) {
+    // 编辑
+    DB.students[id].name = name;
+    if (pass) {
+      DB.accounts[id].password = pass;
+      DB.accounts[id].username = name;
+      DB.accounts[id].name = name;
+    }
+    toast('已更新学员');
+  } else {
+    // 新增
+    id = 's' + Date.now();
+    DB.students[id] = { id: id, name: name, assignments: [] };
+    DB.accounts[id] = { id: id, username: name, password: pass || '123456', name: name, role: 'student' };
+    toast('已添加学员：' + name);
+  }
   
   await saveCloud(DB);
   hideModal('modal-student');
-  toast('已添加学员：' + name);
   document.getElementById('m-s-name').value = '';
   document.getElementById('m-s-pass').value = '';
   renderStudents();
   renderDash();
 }
 
-// ===== 新增教师 =====
-async function addTeacher() {
+async function deleteStudent() {
+  var id = document.getElementById('m-s-id').value;
+  if (!id) return;
+  
+  // 检查是否有剩余课时
+  var s = DB.students[id];
+  var hasRem = s.assignments && s.assignments.some(function(a){ return a.remaining > 0; });
+  if (hasRem) {
+    if (!confirm('该学员还有剩余课时，确定删除？')) return;
+  } else {
+    if (!confirm('确定删除该学员？此操作不可恢复')) return;
+  }
+  
+  delete DB.students[id];
+  delete DB.accounts[id];
+  // 删除相关上课记录
+  DB.lessons = DB.lessons.filter(function(l){ return l.studentId !== id; });
+  
+  await saveCloud(DB);
+  hideModal('modal-student');
+  toast('已删除学员');
+  renderStudents();
+  renderDash();
+}
+
+// ===== 新增/编辑教师 =====
+function openNewTeacher() {
+  document.getElementById('modal-teacher-title').textContent = '新增教师';
+  document.getElementById('m-t-id').value = '';
+  document.getElementById('m-t-name').value = '';
+  document.getElementById('m-t-pass').value = '';
+  document.getElementById('btn-del-teacher').style.display = 'none';
+  showModal('modal-teacher');
+}
+
+function editTeacher(tid) {
+  var t = DB.teachers[tid];
+  document.getElementById('modal-teacher-title').textContent = '编辑教师';
+  document.getElementById('m-t-id').value = tid;
+  document.getElementById('m-t-name').value = t.name;
+  document.getElementById('m-t-pass').value = '';
+  document.getElementById('m-t-pass').placeholder = '留空不修改密码';
+  document.getElementById('btn-del-teacher').style.display = 'block';
+  showModal('modal-teacher');
+}
+
+async function saveTeacher() {
+  var id = document.getElementById('m-t-id').value;
   var name = document.getElementById('m-t-name').value.trim();
   var pass = document.getElementById('m-t-pass').value;
-  if (!name) { toast('请输入姓名'); return; }
-  if (!pass) { toast('请输入密码'); return; }
   
-  var id = 't' + Date.now();
-  DB.teachers[id] = { id: id, name: name };
-  DB.accounts[id] = { id: id, username: name, password: pass, name: name, role: 'teacher' };
+  if (!name) { toast('请输入姓名'); return; }
+  
+  if (id) {
+    // 编辑
+    DB.teachers[id].name = name;
+    if (pass) {
+      DB.accounts[id].password = pass;
+    }
+    DB.accounts[id].name = name;
+    DB.accounts[id].username = name;
+    toast('已更新教师');
+  } else {
+    // 新增
+    if (!pass) { toast('请输入密码'); return; }
+    id = 't' + Date.now();
+    DB.teachers[id] = { id: id, name: name };
+    DB.accounts[id] = { id: id, username: name, password: pass, name: name, role: 'teacher' };
+    toast('已添加教师：' + name);
+  }
   
   await saveCloud(DB);
   hideModal('modal-teacher');
-  toast('已添加教师：' + name);
   document.getElementById('m-t-name').value = '';
   document.getElementById('m-t-pass').value = '';
   renderTeachers();
+  renderDash();
+}
+
+async function deleteTeacher() {
+  var id = document.getElementById('m-t-id').value;
+  if (!id) return;
+  
+  // 检查是否有分配的学员
+  var hasStu = false;
+  for (var sid in DB.students) {
+    if (DB.students[sid].assignments) {
+      if (DB.students[sid].assignments.some(function(a){ return a.teacherId === id; })) {
+        hasStu = true;
+        break;
+      }
+    }
+  }
+  
+  if (hasStu) {
+    if (!confirm('该教师还有分配的学员，删除后学员的课时分配将清除，确定删除？')) return;
+    // 清除学员对该教师的分配
+    for (var sid in DB.students) {
+      if (DB.students[sid].assignments) {
+        DB.students[sid].assignments = DB.students[sid].assignments.filter(function(a){ return a.teacherId !== id; });
+      }
+    }
+  } else {
+    if (!confirm('确定删除该教师？此操作不可恢复')) return;
+  }
+  
+  delete DB.teachers[id];
+  delete DB.accounts[id];
+  // 删除相关上课记录
+  DB.lessons = DB.lessons.filter(function(l){ return l.teacherId !== id; });
+  
+  await saveCloud(DB);
+  hideModal('modal-teacher');
+  toast('已删除教师');
+  renderTeachers();
+  renderStudents();
   renderDash();
 }
 
