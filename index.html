@@ -16,23 +16,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .lg-box{background:rgba(255,255,255,.12);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:28px 22px;width:100%}
 .f{margin-bottom:12px}
 .f label{display:block;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:5px;text-align:left}
-.f input{width:100%;padding:13px 14px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;font-size:16px;color:#fff;outline:none;transition:all .3s}
+.f input{width:100%;padding:13px 14px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;font-size:16px;color:#fff;outline:none}
 .f input::placeholder{color:rgba(255,255,255,.35)}
 .f input:focus{border-color:#fff;background:rgba(255,255,255,.18)}
-.lg-btn{width:100%;padding:14px;background:linear-gradient(135deg,#fff,#e8f5e9);color:#1a7a4a;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px;letter-spacing:2px}
-.lg-btn:hover{transform:translateY(-2px)}
+.lg-btn{width:100%;padding:14px;background:linear-gradient(135deg,#fff,#e8f5e9);color:#1a7a4a;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px}
 .lg-btn:disabled{opacity:0.6;cursor:not-allowed}
-.lg-err{color:#ffcdd2;font-size:13px;text-align:center;margin-top:10px;min-height:18px}
+.lg-err{color:#ffcdd2;font-size:13px;text-align:center;margin-top:10px}
 .lg-loading{color:rgba(255,255,255,.7);font-size:13px;text-align:center;margin-top:8px}
 #appPage{display:none}
 #appPage.show{display:block}
-.topbar{background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.topbar{background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .tl{display:flex;align-items:center;gap:10px}
 .tl-img{width:28px;height:28px;border-radius:6px;object-fit:cover;background:rgba(255,255,255,.2)}
 .tl-title{font-size:16px;font-weight:700}
 .tr{display:flex;align-items:center;gap:10px}
-.tr-role{font-size:13px}
-.sync-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.2);margin-right:8px}
+.sync-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.2)}
 .tab-bar{display:flex;background:#fff;border-bottom:2px solid #eee;position:sticky;top:52px;z-index:99}
 .tab{flex:1;padding:12px 4px;text-align:center;font-size:13px;font-weight:600;color:#999;cursor:pointer;border-bottom:3px solid transparent}
 .tab.active{color:#1a7a4a;border-bottom-color:#1a7a4a}
@@ -45,6 +43,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .btn-r{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff}
 .btn-gray{background:#eee;color:#666}
 .btn-block{width:100%;justify-content:center}
+.btn-sm{padding:6px 10px;font-size:12px}
 .btn-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 .sc{background:#fff;border-radius:14px;padding:12px 6px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.05)}
@@ -53,23 +52,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,.05);margin-bottom:10px}
 .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .cn{font-size:16px;font-weight:700}
-.cm{font-size:12px;color:#999}
 .ci{font-size:13px;color:#666;margin-bottom:8px}
 .ca{display:flex;gap:6px;flex-wrap:wrap}
-.course-list{margin-top:8px;border-top:1px solid #eee;padding-top:8px}
-.course-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f5f7fa;border-radius:8px;margin-bottom:5px;font-size:13px}
-.course-n{font-weight:600}
-.course-l{font-size:11px;color:#888}
-.course-r{font-size:16px;font-weight:700;color:#1a7a4a}
-.course-t{font-size:11px;color:#999}
+.assign-list{margin-top:8px;border-top:1px solid #eee;padding-top:8px}
+.assign-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f5f7fa;border-radius:8px;margin-bottom:5px}
+.assign-t{font-size:13px}
+.assign-n{font-weight:600}
+.assign-h{font-size:18px;font-weight:700;color:#1a7a4a}
+.assign-r{font-size:11px;color:#888}
 .lesson-item{padding:12px;background:#f5f7fa;border-radius:10px;margin-bottom:8px}
 .lesson-d{font-size:11px;color:#888;margin-bottom:4px}
-.lesson-c{font-size:14px;font-weight:600;margin-bottom:4px}
-.lesson-f{font-size:13px;color:#444;background:#fff;padding:8px;border-radius:6px}
+.lesson-h{font-size:12px;color:#1a7a4a;font-weight:600;margin-bottom:2px}
+.lesson-f{font-size:13px;color:#444;background:#fff;padding:8px;border-radius:6px;margin-top:6px}
 .tag{display:inline-block;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:600}
 .tag-g{background:#d4edda;color:#155724}
 .tag-b{background:#cce5ff;color:#004085}
 .tag-o{background:#fff3cd;color:#856404}
+.tag-r{background:#f8d7da;color:#721c24}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center}
 .sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:20px}
 .sh{width:36px;height:4px;background:#ccc;border-radius:2px;margin:0 auto 16px}
@@ -78,7 +77,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .fg label{display:block;font-size:12px;color:#888;margin-bottom:4px}
 .fi{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;outline:none;background:#fff}
 .fi:focus{border-color:#25a865}
-.ta{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;outline:none;resize:none;min-height:100px}
+.ta{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;outline:none;resize:none;min-height:80px}
 .toast{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:12px 24px;border-radius:20px;font-size:14px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
 .empty{text-align:center;padding:40px;color:#ccc}
@@ -88,6 +87,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .sync-box h3{font-size:14px;margin-bottom:8px}
 .sync-box p{font-size:12px;color:#888;margin-bottom:10px}
 .hidden{display:none!important}
+.out-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -117,109 +117,147 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
     <div class="tr">
       <span class="sync-badge" id="syncBadge">☁️</span>
       <span id="curRole"></span>
-      <button class="out-btn" style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;cursor:pointer" onclick="logout()">退出</button>
+      <button class="out-btn" onclick="logout()">退出</button>
     </div>
   </div>
   
+  <!-- 管理员标签 -->
   <div id="adminTabs" class="tab-bar hidden">
     <div class="tab active" onclick="switchTab('dashboard',this)">总览</div>
-    <div class="tab" onclick="switchTab('students',this)">学员</div>
-    <div class="tab" onclick="switchTab('teachers',this)">教师</div>
-    <div class="tab" onclick="switchTab('lessons',this)">记录</div>
+    <div class="tab" onclick="switchTab('students',this)">学员课时</div>
+    <div class="tab" onclick="switchTab('teachers',this)">教师管理</div>
+    <div class="tab" onclick="switchTab('accounts',this)">账号管理</div>
   </div>
+  
+  <!-- 教师标签 -->
   <div id="teacherTabs" class="tab-bar hidden">
     <div class="tab active" onclick="switchTab('myStudents',this)">我的学员</div>
     <div class="tab" onclick="switchTab('myLessons',this)">上课记录</div>
   </div>
+  
+  <!-- 学生标签 -->
   <div id="studentTabs" class="tab-bar hidden">
-    <div class="tab active" onclick="switchTab('myCourses',this)">我的课程</div>
-    <div class="tab" onclick="switchTab('myFeedbacks',this)">反馈</div>
+    <div class="tab active" onclick="switchTab('myInfo',this)">我的课时</div>
+    <div class="tab" onclick="switchTab('myRecords',this)">上课记录</div>
   </div>
 
+  <!-- ===== 管理员：总览 ===== -->
   <div class="page active" id="page-dashboard">
     <div class="stats">
       <div class="sc"><div class="sn" id="s-stu">0</div><div class="sl">学员</div></div>
       <div class="sc"><div class="sn" id="s-tea">0</div><div class="sl">教师</div></div>
-      <div class="sc"><div class="sn" id="s-lesson">0</div><div class="sl">记录</div></div>
+      <div class="sc"><div class="sn" id="s-total">0</div><div class="sl">总课时</div></div>
     </div>
     <div class="btn-row">
       <button class="btn btn-g" onclick="showModal('modal-student')">+ 新增学员</button>
       <button class="btn btn-b" onclick="showModal('modal-teacher')">+ 新增教师</button>
     </div>
     <div class="sync-box">
-      <h3>☁️ 云端同步已启用</h3>
-      <p id="syncInfo">所有数据自动同步到云端，多设备实时共享</p>
-      <button class="btn btn-gray btn-block" onclick="forceSync()">🔄 强制刷新</button>
+      <h3>☁️ 云端同步</h3>
+      <p>所有数据自动同步，多设备共享</p>
+      <button class="btn btn-gray btn-block" onclick="forceSync()">🔄 刷新数据</button>
     </div>
   </div>
 
-  <div class="page" id="page-students"><div id="students-list"></div></div>
-  <div class="page" id="page-teachers"><div id="teachers-list"></div></div>
-  <div class="page" id="page-lessons"><div id="lessons-list"></div></div>
-  <div class="page" id="page-myStudents"><div id="my-students"></div></div>
-  <div class="page" id="page-myLessons"><div id="my-lessons"></div></div>
-  <div class="page" id="page-myCourses"><div id="my-courses"></div></div>
-  <div class="page" id="page-myFeedbacks"><div id="my-feedbacks"></div></div>
+  <!-- ===== 管理员：学员课时管理 ===== -->
+  <div class="page" id="page-students">
+    <div class="btn-row"><button class="btn btn-g" onclick="showModal('modal-student')">+ 新增学员</button></div>
+    <div id="students-list"></div>
+  </div>
+
+  <!-- ===== 管理员：教师管理 ===== -->
+  <div class="page" id="page-teachers">
+    <div class="btn-row"><button class="btn btn-b" onclick="showModal('modal-teacher')">+ 新增教师</button></div>
+    <div id="teachers-list"></div>
+  </div>
+
+  <!-- ===== 管理员：账号管理 ===== -->
+  <div class="page" id="page-accounts">
+    <div id="accounts-list"></div>
+  </div>
+
+  <!-- ===== 教师：我的学员 ===== -->
+  <div class="page" id="page-myStudents">
+    <div id="teacher-students"></div>
+  </div>
+
+  <!-- ===== 教师：上课记录 ===== -->
+  <div class="page" id="page-myLessons">
+    <div id="teacher-lessons"></div>
+  </div>
+
+  <!-- ===== 学生：我的课时 ===== -->
+  <div class="page" id="page-myInfo">
+    <div id="student-info"></div>
+  </div>
+
+  <!-- ===== 学生：上课记录 ===== -->
+  <div class="page" id="page-myRecords">
+    <div id="student-records"></div>
+  </div>
 </div>
 
-<!-- 弹窗 -->
+<!-- ===== 弹窗 ===== -->
+
+<!-- 新增学员 -->
 <div class="overlay hidden" id="modal-student">
   <div class="sheet">
     <div class="sh"></div>
     <div class="st">新增学员</div>
-    <div class="fg"><label>姓名</label><input class="fi" id="m-s-name" placeholder="请输入学员姓名"></div>
-    <div class="fg"><label>密码</label><input class="fi" id="m-s-pass" type="password" placeholder="留空默认123456"></div>
+    <div class="fg"><label>姓名</label><input class="fi" id="m-s-name" placeholder="学员姓名"></div>
+    <div class="fg"><label>登录密码</label><input class="fi" id="m-s-pass" type="password" placeholder="留空默认123456"></div>
     <button class="btn btn-g btn-block" onclick="addStudent()">保存</button>
     <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="hideModal('modal-student')">取消</button>
   </div>
 </div>
 
+<!-- 新增教师 -->
 <div class="overlay hidden" id="modal-teacher">
   <div class="sheet">
     <div class="sh"></div>
     <div class="st">新增教师</div>
-    <div class="fg"><label>姓名</label><input class="fi" id="m-t-name" placeholder="如：王老师"></div>
-    <div class="fg"><label>密码</label><input class="fi" id="m-t-pass" type="password" placeholder="请设置密码"></div>
+    <div class="fg"><label>姓名</label><input class="fi" id="m-t-name" placeholder="教师姓名"></div>
+    <div class="fg"><label>登录密码</label><input class="fi" id="m-t-pass" type="password" placeholder="登录密码"></div>
     <button class="btn btn-b btn-block" onclick="addTeacher()">保存</button>
     <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="hideModal('modal-teacher')">取消</button>
   </div>
 </div>
 
-<div class="overlay hidden" id="modal-course">
+<!-- 分配课时 -->
+<div class="overlay hidden" id="modal-assign">
   <div class="sheet">
     <div class="sh"></div>
-    <div class="st">添加课程包</div>
-    <input type="hidden" id="m-c-sid">
-    <div class="fg" id="m-c-sname" style="background:#e8f5e9;padding:10px;border-radius:8px;margin-bottom:14px"></div>
-    <div class="fg"><label>课程名称</label><input class="fi" id="m-c-name" placeholder="如：粤语播音基础班"></div>
-    <div class="fg"><label>课时数量</label><input class="fi" id="m-c-hours" type="number" placeholder="10" min="1"></div>
-    <div class="fg"><label>分配教师</label>
-      <select class="fi" id="m-c-teacher"><option value="">选择教师（可选）</option></select>
-    </div>
-    <button class="btn btn-g btn-block" onclick="addCourse()">添加</button>
-    <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="hideModal('modal-course')">取消</button>
+    <div class="st">分配课时给教师</div>
+    <input type="hidden" id="m-a-sid">
+    <div class="fg"><label>学员</label><div id="m-a-sname" style="padding:10px;background:#f5f5f5;border-radius:8px;font-weight:600"></div></div>
+    <div class="fg"><label>选择教师</label><select class="fi" id="m-a-teacher"></select></div>
+    <div class="fg"><label>分配课时数</label><input class="fi" id="m-a-hours" type="number" placeholder="输入课时数" min="1"></div>
+    <button class="btn btn-g btn-block" onclick="saveAssign()">确认分配</button>
+    <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="hideModal('modal-assign')">取消</button>
   </div>
 </div>
 
+<!-- 教师销课 -->
 <div class="overlay hidden" id="modal-lesson">
   <div class="sheet">
     <div class="sh"></div>
     <div class="st">记录上课</div>
     <input type="hidden" id="m-l-sid">
-    <input type="hidden" id="m-l-cidx">
-    <div class="fg" style="background:#e3f2fd;padding:10px;border-radius:8px;margin-bottom:14px">
-      <div id="m-l-sname" style="font-weight:700"></div>
-      <div id="m-l-cname" style="font-size:13px;color:#666;margin-top:4px"></div>
+    <input type="hidden" id="m-l-aidx">
+    <div class="fg" style="background:#e8f5e9;padding:12px;border-radius:10px;margin-bottom:14px">
+      <div id="m-l-sname" style="font-weight:700;font-size:16px"></div>
+      <div id="m-l-rem" style="font-size:13px;color:#666;margin-top:4px"></div>
     </div>
+    <div class="fg"><label>销课数量</label><input class="fi" id="m-l-hours" type="number" placeholder="1" min="1" value="1"></div>
     <div class="fg"><label>上课时间</label><input class="fi" id="m-l-date" type="datetime-local"></div>
     <div class="fg"><label>课堂反馈</label><textarea class="ta" id="m-l-fb" placeholder="记录本节课内容、学员表现、作业等..."></textarea></div>
-    <button class="btn btn-g btn-block" onclick="addLesson()">确认销课</button>
+    <button class="btn btn-g btn-block" onclick="saveLesson()">确认销课</button>
     <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="hideModal('modal-lesson')">取消</button>
   </div>
 </div>
 
 <script>
-// Supabase 云同步
+// Supabase配置
 var SUPABASE_URL = 'https://uwmujdjedxrksnpgbfmo.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3bXVqZGplZHhya3NucGdiZm1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MDYwODQsImV4cCI6MjA5MDE4MjA4NH0.T3va7qhKUm7AVbHMFGDwF2QeN_x2ENabAVhqo226amc';
 var TABLE = 'app_state';
@@ -228,6 +266,7 @@ var DB = null;
 var currentUser = null;
 var isLoading = false;
 
+// 云端操作
 async function fetchCloud() {
   try {
     var res = await fetch(SUPABASE_URL + '/rest/v1/' + TABLE + '?id=eq.main&select=data', {
@@ -237,7 +276,7 @@ async function fetchCloud() {
       var d = await res.json();
       if (d && d.length > 0) return d[0].data;
     }
-  } catch(e) { console.log('加载失败', e); }
+  } catch(e) { console.log('云端加载失败', e); }
   return null;
 }
 
@@ -248,27 +287,30 @@ async function saveCloud(data) {
       headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
       body: JSON.stringify({ data: data, updated_at: new Date().toISOString() })
     });
-  } catch(e) { console.log('保存失败', e); }
+    updateBadge('✓');
+  } catch(e) { console.log('云端保存失败', e); }
 }
 
-function initData(cloud) {
+function initDB(cloud) {
   if (cloud) { DB = cloud; updateBadge('✓'); }
   else {
-    DB = { students:{}, teachers:{}, accounts:{'admin':{id:'admin',username:'admin',password:'admin123',name:'管理员',role:'admin'}}, lessons:[] };
-    updateBadge('☁️');
+    DB = {
+      students: {},       // {id: {id, name, totalHours, assignments:[{teacherId, hours, remaining}]}}
+      teachers: {},       // {id: {id, name}}
+      accounts: {'admin':{id:'admin',username:'admin',password:'admin123',name:'管理员',role:'admin'}},
+      lessons: []         // [{id, studentId, teacherId, hours, lessonDate, feedback}]
+    };
   }
 }
 
-function updateBadge(txt) {
-  var b = document.getElementById('syncBadge');
-  if (b) b.textContent = txt;
-}
+function updateBadge(t) { var b = document.getElementById('syncBadge'); if(b) b.textContent = t; }
 
+// UI工具
 function toast(msg) {
   var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2000);
+  setTimeout(function(){t.classList.remove('show');}, 2000);
 }
 function showModal(id) { document.getElementById(id).classList.remove('hidden'); }
 function hideModal(id) { document.getElementById(id).classList.add('hidden'); }
@@ -280,6 +322,7 @@ function dt(ds) {
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
 }
 
+// 登录
 function login() {
   if (isLoading) return;
   var u = document.getElementById('lu').value.trim();
@@ -294,7 +337,7 @@ function login() {
 
   (async function() {
     var cloud = await fetchCloud();
-    initData(cloud);
+    initDB(cloud);
     
     var found = null;
     for (var k in DB.accounts) {
@@ -328,16 +371,16 @@ function showApp() {
   
   if (currentUser.role === 'admin') {
     document.getElementById('adminTabs').classList.remove('hidden');
-    document.getElementById('curRole').textContent = '管理员';
+    document.getElementById('curRole').textContent = '👑 管理员';
     switchTab('dashboard', document.getElementById('adminTabs').querySelector('.tab'));
   } else if (currentUser.role === 'teacher') {
     document.getElementById('teacherTabs').classList.remove('hidden');
-    document.getElementById('curRole').textContent = currentUser.name;
+    document.getElementById('curRole').textContent = '👩‍🏫 ' + currentUser.name;
     switchTab('myStudents', document.getElementById('teacherTabs').querySelector('.tab'));
   } else if (currentUser.role === 'student') {
     document.getElementById('studentTabs').classList.remove('hidden');
-    document.getElementById('curRole').textContent = currentUser.name;
-    switchTab('myCourses', document.getElementById('studentTabs').querySelector('.tab'));
+    document.getElementById('curRole').textContent = '👨‍🎓 ' + currentUser.name;
+    switchTab('myInfo', document.getElementById('studentTabs').querySelector('.tab'));
   }
 }
 
@@ -347,218 +390,386 @@ function switchTab(page, el) {
   if (el) el.classList.add('active');
   var pEl = document.getElementById('page-' + page);
   if (pEl) pEl.classList.add('active');
+  
   switch(page) {
     case 'dashboard': renderDash(); break;
     case 'students': renderStudents(); break;
     case 'teachers': renderTeachers(); break;
-    case 'lessons': renderLessons(); break;
+    case 'accounts': renderAccounts(); break;
     case 'myStudents': renderMyStudents(); break;
     case 'myLessons': renderMyLessons(); break;
-    case 'myCourses': renderMyCourses(); break;
-    case 'myFeedbacks': renderMyFeedbacks(); break;
+    case 'myInfo': renderMyInfo(); break;
+    case 'myRecords': renderMyRecords(); break;
   }
 }
 
+// ===== 管理员：总览 =====
 function renderDash() {
-  document.getElementById('s-stu').textContent = Object.keys(DB.students).length;
-  document.getElementById('s-tea').textContent = Object.keys(DB.teachers).length;
-  document.getElementById('s-lesson').textContent = DB.lessons.length;
+  var stuCount = Object.keys(DB.students).length;
+  var teaCount = Object.keys(DB.teachers).length;
+  var totalHours = 0;
+  for (var sid in DB.students) {
+    var s = DB.students[sid];
+    if (s.assignments) s.assignments.forEach(function(a){ totalHours += (a.remaining || 0); });
+  }
+  document.getElementById('s-stu').textContent = stuCount;
+  document.getElementById('s-tea').textContent = teaCount;
+  document.getElementById('s-total').textContent = totalHours;
 }
 
+// ===== 管理员：学员课时管理 =====
 function renderStudents() {
   var el = document.getElementById('students-list');
   var list = Object.values(DB.students);
   if (!list.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">👨‍🎓</div><div class="empty-text">暂无学员</div></div>'; return; }
+  
   el.innerHTML = list.map(function(s) {
-    var cs = s.courses || [];
-    var tr = cs.reduce(function(a,c){return a+(c.remaining||0);},0);
-    var ta = cs.reduce(function(a,c){return a+(c.total||0);},0);
-    var csHtml = cs.length ? cs.map(function(c) {
-      var t = c.teacherId ? DB.teachers[c.teacherId] : null;
-      return '<div class="course-item"><div><div class="course-n">'+esc(c.name)+'</div><div class="course-l">教师：'+(t?esc(t.name):'未分配')+'</div></div><div><span class="course-r">'+c.remaining+'</span><span class="course-t">/'+c.total+'</span></div></div>';
-    }).join('') : '<div style="font-size:12px;color:#bbb;padding:4px 0">暂无课程</div>';
-    return '<div class="card"><div class="ch"><span class="cn">'+esc(s.name)+'</span><span class="tag '+(tr>0?'tag-g':'tag-o')+'">'+tr+'/'+ta+' 课时</span></div><div class="ca"><button class="btn btn-g btn-sm" onclick="openAddCourse(\''+s.id+'\')">+课程</button><button class="btn btn-b btn-sm" onclick="openAddLesson(\''+s.id+'\',0)">上课</button></div><div class="course-list">'+csHtml+'</div></div>';
+    var assigns = s.assignments || [];
+    var totalRem = assigns.reduce(function(a,x){return a+(x.remaining||0);},0);
+    var totalAll = assigns.reduce(function(a,x){return a+(x.hours||0);},0);
+    
+    var assignHtml = assigns.length ? assigns.map(function(a, i) {
+      var t = DB.teachers[a.teacherId];
+      return '<div class="assign-item">' +
+        '<div class="assign-t"><span class="assign-n">' + (t ? esc(t.name) : '未分配') + '</span></div>' +
+        '<div style="text-align:right">' +
+          '<div class="assign-h">' + a.remaining + '</div>' +
+          '<div class="assign-r">/' + a.hours + ' 课时</div>' +
+        '</div>' +
+      '</div>';
+    }).join('') : '<div style="font-size:12px;color:#bbb;padding:8px 0">暂未分配课时</div>';
+    
+    return '<div class="card">' +
+      '<div class="ch">' +
+        '<span class="cn">' + esc(s.name) + '</span>' +
+        '<span class="tag ' + (totalRem > 0 ? 'tag-g' : 'tag-o') + '">剩余 ' + totalRem + '/' + totalAll + ' 课时</span>' +
+      '</div>' +
+      '<div class="ca">' +
+        '<button class="btn btn-g btn-sm" onclick="openAssign(\'' + s.id + '\')">分配课时</button>' +
+      '</div>' +
+      '<div class="assign-list">' + assignHtml + '</div>' +
+    '</div>';
   }).join('');
 }
 
+// ===== 管理员：教师管理 =====
 function renderTeachers() {
   var el = document.getElementById('teachers-list');
   var list = Object.values(DB.teachers);
   if (!list.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">👩‍🏫</div><div class="empty-text">暂无教师</div></div>'; return; }
+  
   el.innerHTML = list.map(function(t) {
-    var sc = Object.values(DB.students).filter(function(s){return s.courses&&s.courses.some(function(c){return c.teacherId===t.id;});}).length;
-    return '<div class="card"><div class="ch"><span class="cn">'+esc(t.name)+'</span><span class="tag tag-b">'+sc+' 位学员</span></div></div>';
+    // 统计该教师的学员数和课时数
+    var stuCount = 0;
+    var hoursCount = 0;
+    for (var sid in DB.students) {
+      var s = DB.students[sid];
+      if (s.assignments) {
+        s.assignments.forEach(function(a) {
+          if (a.teacherId === t.id) {
+            stuCount++;
+            hoursCount += (a.remaining || 0);
+          }
+        });
+      }
+    }
+    return '<div class="card">' +
+      '<div class="ch">' +
+        '<span class="cn">' + esc(t.name) + '</span>' +
+        '<span class="tag tag-b">' + stuCount + ' 位学员</span>' +
+      '</div>' +
+      '<div class="ci">剩余 ' + hoursCount + ' 课时待上</div>' +
+    '</div>';
   }).join('');
 }
 
-function renderLessons() {
-  var el = document.getElementById('lessons-list');
-  var ls = DB.lessons.slice().sort(function(a,b){return new Date(b.lessonDate)-new Date(a.lessonDate);});
-  if (!ls.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">暂无记录</div></div>'; return; }
-  el.innerHTML = ls.map(function(l) {
-    var st = DB.students[l.studentId]||{};
-    var tc = DB.teachers[l.teacherId]||{};
-    return '<div class="lesson-item"><div class="lesson-d">📅 '+dt(l.lessonDate)+'</div><div class="lesson-c">'+esc(st.name||'')+' · '+esc(l.courseName||'')+'</div><div style="font-size:11px;color:#888;margin-bottom:6px">👩‍🏫 '+esc(tc.name||'')+'</div><div class="lesson-f">'+esc(l.feedback||'无')+'</div></div>';
+// ===== 管理员：账号管理 =====
+function renderAccounts() {
+  var el = document.getElementById('accounts-list');
+  var list = Object.values(DB.accounts);
+  
+  el.innerHTML = '<div style="margin-bottom:10px;font-size:13px;color:#888">点击可修改密码</div>' +
+  list.map(function(a) {
+    var roleTag = a.role === 'admin' ? 'tag-r' : (a.role === 'teacher' ? 'tag-b' : 'tag-g');
+    var roleName = a.role === 'admin' ? '管理员' : (a.role === 'teacher' ? '教师' : '学员');
+    return '<div class="card">' +
+      '<div class="ch">' +
+        '<span class="cn">' + esc(a.name) + '</span>' +
+        '<span class="tag ' + roleTag + '">' + roleName + '</span>' +
+      '</div>' +
+      '<div class="ci">账号：' + esc(a.username) + '</div>' +
+    '</div>';
   }).join('');
 }
 
+// ===== 分配课时 =====
+function openAssign(sid) {
+  var s = DB.students[sid];
+  document.getElementById('m-a-sid').value = sid;
+  document.getElementById('m-a-sname').textContent = s.name;
+  document.getElementById('m-a-hours').value = '';
+  
+  var sel = document.getElementById('m-a-teacher');
+  var html = '<option value="">选择教师</option>';
+  for (var tid in DB.teachers) {
+    html += '<option value="' + tid + '">' + esc(DB.teachers[tid].name) + '</option>';
+  }
+  sel.innerHTML = html;
+  
+  showModal('modal-assign');
+}
+
+async function saveAssign() {
+  var sid = document.getElementById('m-a-sid').value;
+  var tid = document.getElementById('m-a-teacher').value;
+  var hours = parseInt(document.getElementById('m-a-hours').value) || 0;
+  
+  if (!tid) { toast('请选择教师'); return; }
+  if (hours < 1) { toast('请输入课时数'); return; }
+  
+  var s = DB.students[sid];
+  if (!s.assignments) s.assignments = [];
+  
+  // 检查是否已分配给该教师
+  var found = s.assignments.find(function(a){ return a.teacherId === tid; });
+  if (found) {
+    found.hours += hours;
+    found.remaining += hours;
+  } else {
+    s.assignments.push({ teacherId: tid, hours: hours, remaining: hours });
+  }
+  
+  await saveCloud(DB);
+  hideModal('modal-assign');
+  toast('已分配 ' + hours + ' 课时');
+  renderStudents();
+  renderDash();
+}
+
+// ===== 新增学员 =====
 async function addStudent() {
   var name = document.getElementById('m-s-name').value.trim();
   var pass = document.getElementById('m-s-pass').value || '123456';
   if (!name) { toast('请输入姓名'); return; }
-  var id = 's'+Date.now();
-  DB.students[id] = {id:id, name:name, courses:[], createdAt:new Date().toISOString()};
-  DB.accounts[id] = {id:id, username:name, password:pass, name:name, role:'student'};
+  
+  var id = 's' + Date.now();
+  DB.students[id] = { id: id, name: name, assignments: [] };
+  DB.accounts[id] = { id: id, username: name, password: pass, name: name, role: 'student' };
+  
   await saveCloud(DB);
   hideModal('modal-student');
-  toast('已添加：'+name);
+  toast('已添加学员：' + name);
   document.getElementById('m-s-name').value = '';
   document.getElementById('m-s-pass').value = '';
   renderStudents();
   renderDash();
-  updateBadge('✓');
 }
 
+// ===== 新增教师 =====
 async function addTeacher() {
   var name = document.getElementById('m-t-name').value.trim();
   var pass = document.getElementById('m-t-pass').value;
   if (!name) { toast('请输入姓名'); return; }
   if (!pass) { toast('请输入密码'); return; }
-  var id = 't'+Date.now();
-  DB.teachers[id] = {id:id, name:name};
-  DB.accounts[id] = {id:id, username:name, password:pass, name:name, role:'teacher'};
+  
+  var id = 't' + Date.now();
+  DB.teachers[id] = { id: id, name: name };
+  DB.accounts[id] = { id: id, username: name, password: pass, name: name, role: 'teacher' };
+  
   await saveCloud(DB);
   hideModal('modal-teacher');
-  toast('已添加：'+name);
+  toast('已添加教师：' + name);
   document.getElementById('m-t-name').value = '';
   document.getElementById('m-t-pass').value = '';
   renderTeachers();
   renderDash();
-  updateBadge('✓');
 }
 
-function openAddCourse(sid) {
-  document.getElementById('m-c-sid').value = sid;
-  document.getElementById('m-c-sname').textContent = '学员：'+DB.students[sid].name;
-  document.getElementById('m-c-name').value = '';
-  document.getElementById('m-c-hours').value = '';
-  var sel = document.getElementById('m-c-teacher');
-  var html = '<option value="">选择教师（可选）</option>';
-  for (var k in DB.teachers) html += '<option value="'+DB.teachers[k].id+'">'+esc(DB.teachers[k].name)+'</option>';
-  sel.innerHTML = html;
-  showModal('modal-course');
+// ===== 教师端：我的学员 =====
+function renderMyStudents() {
+  var el = document.getElementById('teacher-students');
+  var myStudents = [];
+  
+  for (var sid in DB.students) {
+    var s = DB.students[sid];
+    if (s.assignments) {
+      s.assignments.forEach(function(a, i) {
+        if (a.teacherId === currentUser.id && a.remaining > 0) {
+          myStudents.push({ student: s, assign: a, aidx: i });
+        }
+      });
+    }
+  }
+  
+  if (!myStudents.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">👨‍🎓</div><div class="empty-text">暂无分配的学员</div></div>'; return; }
+  
+  el.innerHTML = myStudents.map(function(item) {
+    return '<div class="card">' +
+      '<div class="ch">' +
+        '<span class="cn">' + esc(item.student.name) + '</span>' +
+        '<span class="tag tag-g">' + item.assign.remaining + ' 课时</span>' +
+      '</div>' +
+      '<button class="btn btn-g" onclick="openLesson(\'' + item.student.id + '\',' + item.aidx + ')">📝 记录上课</button>' +
+    '</div>';
+  }).join('');
 }
 
-async function addCourse() {
-  var sid = document.getElementById('m-c-sid').value;
-  var name = document.getElementById('m-c-name').value.trim();
-  var hours = parseInt(document.getElementById('m-c-hours').value) || 0;
-  var tid = document.getElementById('m-c-teacher').value;
-  if (!name) { toast('请输入课程名'); return; }
-  if (hours < 1) { toast('请输入课时数'); return; }
-  var st = DB.students[sid];
-  if (!st.courses) st.courses = [];
-  st.courses.push({name:name, total:hours, remaining:hours, teacherId:tid||null});
-  await saveCloud(DB);
-  hideModal('modal-course');
-  toast('已添加：'+name);
-  renderStudents();
-  renderDash();
-  updateBadge('✓');
+// ===== 教师端：上课记录 =====
+function renderMyLessons() {
+  var el = document.getElementById('teacher-lessons');
+  var myLessons = DB.lessons.filter(function(l){ return l.teacherId === currentUser.id; })
+    .sort(function(a,b){ return new Date(b.lessonDate) - new Date(a.lessonDate); });
+  
+  if (!myLessons.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">暂无上课记录</div></div>'; return; }
+  
+  el.innerHTML = myLessons.map(function(l) {
+    var s = DB.students[l.studentId];
+    return '<div class="lesson-item">' +
+      '<div class="lesson-d">📅 ' + dt(l.lessonDate) + '</div>' +
+      '<div style="font-weight:600">' + esc(s ? s.name : '') + '</div>' +
+      '<div class="lesson-h">销 ' + l.hours + ' 课时</div>' +
+      '<div class="lesson-f">' + esc(l.feedback || '无反馈') + '</div>' +
+    '</div>';
+  }).join('');
 }
 
-function openAddLesson(sid, cidx) {
-  var st = DB.students[sid];
-  if (!st.courses || st.courses.length === 0) { toast('该学员暂无课程'); return; }
-  var c = st.courses[cidx];
+// ===== 教师端：销课弹窗 =====
+function openLesson(sid, aidx) {
+  var s = DB.students[sid];
+  var a = s.assignments[aidx];
+  
   document.getElementById('m-l-sid').value = sid;
-  document.getElementById('m-l-cidx').value = cidx;
-  document.getElementById('m-l-sname').textContent = st.name;
-  document.getElementById('m-l-cname').textContent = c.name + ' (剩余'+c.remaining+'课)';
+  document.getElementById('m-l-aidx').value = aidx;
+  document.getElementById('m-l-sname').textContent = s.name;
+  document.getElementById('m-l-rem').textContent = '剩余 ' + a.remaining + ' 课时';
+  document.getElementById('m-l-hours').value = 1;
+  document.getElementById('m-l-hours').max = a.remaining;
+  
   var now = new Date();
   var p = function(n){return n<10?'0'+n:n;};
   document.getElementById('m-l-date').value = now.getFullYear()+'-'+p(now.getMonth()+1)+'-'+p(now.getDate())+'T'+p(now.getHours())+':'+p(now.getMinutes());
   document.getElementById('m-l-fb').value = '';
+  
   showModal('modal-lesson');
 }
 
-async function addLesson() {
+async function saveLesson() {
   var sid = document.getElementById('m-l-sid').value;
-  var cidx = parseInt(document.getElementById('m-l-cidx').value);
+  var aidx = parseInt(document.getElementById('m-l-aidx').value);
+  var hours = parseInt(document.getElementById('m-l-hours').value) || 1;
   var date = document.getElementById('m-l-date').value;
   var fb = document.getElementById('m-l-fb').value.trim();
-  if (!date) { toast('请选择时间'); return; }
-  if (!fb) { toast('请填写反馈'); return; }
-  var c = DB.students[sid].courses[cidx];
-  if (c.remaining <= 0) { toast('无剩余课时'); return; }
-  c.remaining--;
-  DB.lessons.push({id:'l'+Date.now(), studentId:sid, courseIdx:cidx, courseName:c.name, teacherId:currentUser.id, lessonDate:date, feedback:fb, createdAt:new Date().toISOString()});
+  
+  if (hours < 1) { toast('请输入销课数量'); return; }
+  if (!date) { toast('请选择上课时间'); return; }
+  if (!fb) { toast('请填写课堂反馈'); return; }
+  
+  var a = DB.students[sid].assignments[aidx];
+  if (hours > a.remaining) { toast('销课数量超过剩余课时'); return; }
+  
+  a.remaining -= hours;
+  
+  DB.lessons.push({
+    id: 'l' + Date.now(),
+    studentId: sid,
+    teacherId: currentUser.id,
+    hours: hours,
+    lessonDate: date,
+    feedback: fb,
+    createdAt: new Date().toISOString()
+  });
+  
   await saveCloud(DB);
   hideModal('modal-lesson');
-  toast('已记录！剩余'+c.remaining+'课');
-  renderStudents();
-  renderLessons();
+  toast('已销 ' + hours + ' 课时，剩余 ' + a.remaining + ' 课时');
   renderMyStudents();
-  renderDash();
-  updateBadge('✓');
+  renderMyLessons();
 }
 
-function renderMyStudents() {
-  var el = document.getElementById('my-students');
-  var my = [];
-  for (var sid in DB.students) {
-    var s = DB.students[sid];
-    if (s.courses) s.courses.forEach(function(c,i){if(c.teacherId===currentUser.id&&c.remaining>0)my.push({s:s,c:c,i:i});});
+// ===== 学生端：我的课时 =====
+function renderMyInfo() {
+  var el = document.getElementById('student-info');
+  var s = DB.students[currentUser.id];
+  
+  if (!s || !s.assignments || !s.assignments.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📚</div><div class="empty-text">暂无课时信息</div></div>';
+    return;
   }
-  if (!my.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">👨‍🎓</div><div class="empty-text">暂无分配学员</div></div>'; return; }
-  el.innerHTML = my.map(function(m){
-    return '<div class="card"><div class="ch"><span class="cn">'+esc(m.s.name)+'</span><span class="tag tag-g">'+m.c.remaining+'课</span></div><div class="ci">'+esc(m.c.name)+'</div><button class="btn btn-g" onclick="openAddLesson(\''+m.s.id+'\','+m.i+')">记录上课</button></div>';
+  
+  var totalRem = s.assignments.reduce(function(a,x){return a+(x.remaining||0);},0);
+  var totalAll = s.assignments.reduce(function(a,x){return a+(x.hours||0);},0);
+  var totalUsed = totalAll - totalRem;
+  
+  var html = '<div class="card" style="background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff;margin-bottom:16px">' +
+    '<div style="text-align:center;padding:10px 0">' +
+      '<div style="font-size:48px;font-weight:800">' + totalRem + '</div>' +
+      '<div style="font-size:14px;opacity:0.9">剩余课时</div>' +
+    '</div>' +
+    '<div style="display:flex;justify-content:space-around;border-top:1px solid rgba(255,255,255,.2);padding-top:12px;margin-top:8px">' +
+      '<div style="text-align:center"><div style="font-size:20px;font-weight:700">' + totalAll + '</div><div style="font-size:12px;opacity:0.8">总课时</div></div>' +
+      '<div style="text-align:center"><div style="font-size:20px;font-weight:700">' + totalUsed + '</div><div style="font-size:12px;opacity:0.8">已上课</div></div>' +
+    '</div>' +
+  '</div>';
+  
+  html += '<div style="font-size:14px;font-weight:600;color:#333;margin-bottom:10px">我的老师</div>';
+  
+  s.assignments.forEach(function(a) {
+    var t = DB.teachers[a.teacherId];
+    var pct = Math.round((a.remaining / a.hours) * 100);
+    html += '<div class="card">' +
+      '<div class="ch">' +
+        '<span class="cn">👩‍🏫 ' + (t ? esc(t.name) : '未分配') + '</span>' +
+        '<span class="tag ' + (a.remaining > 0 ? 'tag-g' : 'tag-o') + '">' + a.remaining + '/' + a.hours + '</span>' +
+      '</div>' +
+      '<div style="margin-top:8px">' +
+        '<div style="height:6px;background:#eee;border-radius:3px;overflow:hidden">' +
+          '<div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,#1a7a4a,#25a865);border-radius:3px"></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+  
+  el.innerHTML = html;
+}
+
+// ===== 学生端：上课记录 =====
+function renderMyRecords() {
+  var el = document.getElementById('student-records');
+  var myLessons = DB.lessons.filter(function(l){ return l.studentId === currentUser.id; })
+    .sort(function(a,b){ return new Date(b.lessonDate) - new Date(a.lessonDate); });
+  
+  if (!myLessons.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">暂无上课记录</div></div>'; return; }
+  
+  el.innerHTML = myLessons.map(function(l) {
+    var t = DB.teachers[l.teacherId];
+    return '<div class="lesson-item">' +
+      '<div class="lesson-d">📅 ' + dt(l.lessonDate) + (t ? ' · ' + esc(t.name) : '') + '</div>' +
+      '<div class="lesson-h">销 ' + l.hours + ' 课时</div>' +
+      '<div class="lesson-f">' + esc(l.feedback || '无反馈') + '</div>' +
+    '</div>';
   }).join('');
 }
 
-function renderMyLessons() {
-  var el = document.getElementById('my-lessons');
-  var ls = DB.lessons.filter(function(l){return l.teacherId===currentUser.id;}).sort(function(a,b){return new Date(b.lessonDate)-new Date(a.lessonDate);});
-  if (!ls.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">暂无记录</div></div>'; return; }
-  el.innerHTML = ls.map(function(l){
-    var st = DB.students[l.studentId]||{};
-    return '<div class="lesson-item"><div class="lesson-d">📅 '+dt(l.lessonDate)+' · '+esc(st.name||'')+'</div><div class="lesson-c">'+esc(l.courseName||'')+'</div><div class="lesson-f">'+esc(l.feedback||'无')+'</div></div>';
-  }).join('');
-}
-
-function renderMyCourses() {
-  var el = document.getElementById('my-courses');
-  var st = DB.students[currentUser.id];
-  if (!st || !st.courses || !st.courses.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📚</div><div class="empty-text">暂无课程</div></div>'; return; }
-  el.innerHTML = st.courses.map(function(c){
-    var t = c.teacherId ? DB.teachers[c.teacherId] : null;
-    var pct = Math.round((c.remaining/c.total)*100);
-    return '<div class="card"><div class="ch"><span class="cn">'+esc(c.name)+'</span><span class="tag '+(c.remaining>0?'tag-g':'tag-o')+'">'+c.remaining+'/'+c.total+'</span></div><div class="ci">👩‍🏫 '+(t?esc(t.name):'待分配')+'</div><div style="margin-top:8px"><div style="height:6px;background:#eee;border-radius:3px"><div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,#1a7a4a,#25a865);border-radius:3px"></div></div><div style="font-size:11px;color:#999;margin-top:4px">已上'+(c.total-c.remaining)+'节</div></div></div>';
-  }).join('');
-}
-
-function renderMyFeedbacks() {
-  var el = document.getElementById('my-feedbacks');
-  var ls = DB.lessons.filter(function(l){return l.studentId===currentUser.id;}).sort(function(a,b){return new Date(b.lessonDate)-new Date(a.lessonDate);});
-  if (!ls.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">💬</div><div class="empty-text">暂无反馈</div></div>'; return; }
-  el.innerHTML = ls.map(function(l){
-    var t = DB.teachers[l.teacherId]||{};
-    return '<div class="lesson-item"><div class="lesson-d">📅 '+dt(l.lessonDate)+(t.name?' · 👩‍🏫 '+esc(t.name):'')+'</div><div class="lesson-c">'+esc(l.courseName||'')+'</div><div class="lesson-f">'+esc(l.feedback||'无')+'</div></div>';
-  }).join('');
-}
-
+// 刷新数据
 async function forceSync() {
   updateBadge('⟳');
   var cloud = await fetchCloud();
-  if (cloud) { DB = cloud; toast('已刷新'); if (currentUser) showApp(); updateBadge('✓'); }
-  else { toast('刷新失败'); updateBadge('☁️'); }
+  if (cloud) { DB = cloud; toast('已刷新'); if (currentUser) showApp(); }
+  else { toast('刷新失败'); }
 }
 
 // 启动
 document.getElementById('lp').onkeypress = function(e){if(e.key==='Enter')login();};
 var saved = sessionStorage.getItem('crm_user');
 if (saved) {
-  try { currentUser = JSON.parse(saved); (async function(){await fetchCloud(); initData(DB); showApp();})(); } catch(e) {}
+  try {
+    currentUser = JSON.parse(saved);
+    (async function(){
+      var cloud = await fetchCloud();
+      initDB(cloud);
+      showApp();
+    })();
+  } catch(e) {}
 }
 </script>
 </body>
