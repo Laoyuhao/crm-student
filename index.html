@@ -21,7 +21,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .f input:focus{border-color:#fff;background:rgba(255,255,255,.18)}
 .lg-btn{width:100%;padding:14px;background:linear-gradient(135deg,#fff,#e8f5e9);color:#1a7a4a;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px;letter-spacing:2px}
 .lg-btn:hover{transform:translateY(-2px)}
+.lg-btn:disabled{opacity:0.6;cursor:not-allowed}
 .lg-err{color:#ffcdd2;font-size:13px;text-align:center;margin-top:10px;min-height:18px}
+.lg-loading{color:rgba(255,255,255,.7);font-size:13px;text-align:center;margin-top:8px}
 #appPage{display:none}
 #appPage.show{display:block}
 .topbar{background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.15)}
@@ -30,7 +32,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .tl-title{font-size:16px;font-weight:700}
 .tr{display:flex;align-items:center;gap:10px}
 .tr-role{font-size:13px}
-.out-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;cursor:pointer}
+.sync-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.2);margin-right:8px}
 .tab-bar{display:flex;background:#fff;border-bottom:2px solid #eee;position:sticky;top:52px;z-index:99}
 .tab{flex:1;padding:12px 4px;text-align:center;font-size:13px;font-weight:600;color:#999;cursor:pointer;border-bottom:3px solid transparent}
 .tab.active{color:#1a7a4a;border-bottom-color:#1a7a4a}
@@ -77,7 +79,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .fi{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;outline:none;background:#fff}
 .fi:focus{border-color:#25a865}
 .ta{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;outline:none;resize:none;min-height:100px}
-.toast{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:12px 24px;border-radius:20px;font-size:14px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:12px 24px;border-radius:20px;font-size:14px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
 .empty{text-align:center;padding:40px;color:#ccc}
 .empty-icon{font-size:40px;margin-bottom:8px}
@@ -85,15 +87,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 .sync-box{background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 6px rgba(0,0,0,.05);margin-top:6px}
 .sync-box h3{font-size:14px;margin-bottom:8px}
 .sync-box p{font-size:12px;color:#888;margin-bottom:10px}
-.sync-box textarea{width:100%;height:60px;padding:8px;border:1px solid #ddd;border-radius:8px;font-size:11px;resize:none;margin-bottom:8px}
-.sec-title{font-size:14px;font-weight:600;color:#333;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #eee}
 .hidden{display:none!important}
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
 
-<!-- 登录页 -->
 <div id="loginPage">
   <div class="lg">
     <img class="lg-img" src="LOGO.jpg" alt="logo">
@@ -104,11 +103,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
       <div class="f"><label>密 码</label><input type="password" id="lp" placeholder="请输入密码" value="admin123"></div>
       <button class="lg-btn" id="loginBtn" onclick="login()">登 录</button>
       <div class="lg-err" id="loginErr"></div>
+      <div class="lg-loading" id="loginLoading"></div>
     </div>
   </div>
 </div>
 
-<!-- 应用页 -->
 <div id="appPage">
   <div class="topbar">
     <div class="tl">
@@ -116,8 +115,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
       <span class="tl-title">艺风粤播</span>
     </div>
     <div class="tr">
-      <span class="tr-role" id="curRole"></span>
-      <button class="out-btn" onclick="logout()">退出</button>
+      <span class="sync-badge" id="syncBadge">☁️</span>
+      <span id="curRole"></span>
+      <button class="out-btn" style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:4px 12px;border-radius:16px;font-size:12px;cursor:pointer" onclick="logout()">退出</button>
     </div>
   </div>
   
@@ -147,11 +147,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
       <button class="btn btn-b" onclick="showModal('modal-teacher')">+ 新增教师</button>
     </div>
     <div class="sync-box">
-      <h3>📤 数据同步</h3>
-      <p>换手机时导出，新手机导入即可同步</p>
-      <button class="btn btn-g btn-block" onclick="exportDB()">导出</button>
-      <textarea id="syncArea" placeholder="粘贴数据后点击导入..."></textarea>
-      <button class="btn btn-b btn-block" onclick="importDB()">导入</button>
+      <h3>☁️ 云端同步已启用</h3>
+      <p id="syncInfo">所有数据自动同步到云端，多设备实时共享</p>
+      <button class="btn btn-gray btn-block" onclick="forceSync()">🔄 强制刷新</button>
     </div>
   </div>
 
@@ -221,35 +219,56 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue'
 </div>
 
 <script>
-// 数据库
-var DB = {
-  students:{},
-  teachers:{},
-  accounts:{'admin':{id:'admin',username:'admin',password:'admin123',name:'管理员',role:'admin'}},
-  lessons:[]
-};
-var currentUser = null;
+// Supabase 云同步
+var SUPABASE_URL = 'https://uwmujdjedxrksnpgbfmo.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3bXVqZGplZHhya3NucGdiZm1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MDYwODQsImV4cCI6MjA5MDE4MjA4NH0.T3va7qhKUm7AVbHMFGDwF2QeN_x2ENabAVhqo226amc';
+var TABLE = 'app_state';
 
-// 初始化
-function init() {
-  var saved = localStorage.getItem('crm_db');
-  if (saved) {
-    try { DB = JSON.parse(saved); } catch(e) {}
-  }
-  // 确保admin存在
-  if (!DB.accounts.admin) {
-    DB.accounts.admin = {id:'admin',username:'admin',password:'admin123',name:'管理员',role:'admin'};
-    saveDB();
+var DB = null;
+var currentUser = null;
+var isLoading = false;
+
+async function fetchCloud() {
+  try {
+    var res = await fetch(SUPABASE_URL + '/rest/v1/' + TABLE + '?id=eq.main&select=data', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    if (res.ok) {
+      var d = await res.json();
+      if (d && d.length > 0) return d[0].data;
+    }
+  } catch(e) { console.log('加载失败', e); }
+  return null;
+}
+
+async function saveCloud(data) {
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/' + TABLE + '?id=eq.main', {
+      method: 'PATCH',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ data: data, updated_at: new Date().toISOString() })
+    });
+  } catch(e) { console.log('保存失败', e); }
+}
+
+function initData(cloud) {
+  if (cloud) { DB = cloud; updateBadge('✓'); }
+  else {
+    DB = { students:{}, teachers:{}, accounts:{'admin':{id:'admin',username:'admin',password:'admin123',name:'管理员',role:'admin'}}, lessons:[] };
+    updateBadge('☁️');
   }
 }
-function saveDB() { localStorage.setItem('crm_db', JSON.stringify(DB)); }
 
-// UI
+function updateBadge(txt) {
+  var b = document.getElementById('syncBadge');
+  if (b) b.textContent = txt;
+}
+
 function toast(msg) {
   var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');}, 2000);
+  setTimeout(function(){ t.classList.remove('show'); }, 2000);
 }
 function showModal(id) { document.getElementById(id).classList.remove('hidden'); }
 function hideModal(id) { document.getElementById(id).classList.add('hidden'); }
@@ -261,30 +280,36 @@ function dt(ds) {
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
 }
 
-// 登录
 function login() {
+  if (isLoading) return;
   var u = document.getElementById('lu').value.trim();
   var p = document.getElementById('lp').value;
   var err = document.getElementById('loginErr');
+  var loading = document.getElementById('loginLoading');
+  var btn = document.getElementById('loginBtn');
   err.textContent = '';
-  
-  if (!u) { err.textContent = '请输入账号'; return; }
-  if (!p) { err.textContent = '请输入密码'; return; }
-  
-  var found = null;
-  for (var k in DB.accounts) {
-    var a = DB.accounts[k];
-    if (a.username === u && a.password === p) { found = a; break; }
-  }
-  
-  if (!found) { err.textContent = '账号或密码错误'; return; }
-  
-  currentUser = found;
-  sessionStorage.setItem('crm_user', JSON.stringify(found));
-  showApp();
+  loading.textContent = '正在连接云端...';
+  btn.disabled = true;
+  isLoading = true;
+
+  (async function() {
+    var cloud = await fetchCloud();
+    initData(cloud);
+    
+    var found = null;
+    for (var k in DB.accounts) {
+      if (DB.accounts[k].username === u && DB.accounts[k].password === p) { found = DB.accounts[k]; break; }
+    }
+    if (!found) { err.textContent = '账号或密码错误'; loading.textContent = ''; btn.disabled = false; isLoading = false; return; }
+    currentUser = found;
+    sessionStorage.setItem('crm_user', JSON.stringify(found));
+    showApp();
+    btn.disabled = false;
+    isLoading = false;
+    loading.textContent = '';
+  })();
 }
 
-// 退出
 function logout() {
   currentUser = null;
   sessionStorage.removeItem('crm_user');
@@ -294,11 +319,9 @@ function logout() {
   document.getElementById('lp').value = '';
 }
 
-// 显示应用
 function showApp() {
   document.getElementById('loginPage').style.display = 'none';
   document.getElementById('appPage').classList.add('show');
-  
   document.getElementById('adminTabs').classList.add('hidden');
   document.getElementById('teacherTabs').classList.add('hidden');
   document.getElementById('studentTabs').classList.add('hidden');
@@ -318,14 +341,12 @@ function showApp() {
   }
 }
 
-// 切换标签
 function switchTab(page, el) {
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   if (el) el.classList.add('active');
   var pEl = document.getElementById('page-' + page);
   if (pEl) pEl.classList.add('active');
-  
   switch(page) {
     case 'dashboard': renderDash(); break;
     case 'students': renderStudents(); break;
@@ -338,7 +359,6 @@ function switchTab(page, el) {
   }
 }
 
-// 渲染函数
 function renderDash() {
   document.getElementById('s-stu').textContent = Object.keys(DB.students).length;
   document.getElementById('s-tea').textContent = Object.keys(DB.teachers).length;
@@ -353,11 +373,11 @@ function renderStudents() {
     var cs = s.courses || [];
     var tr = cs.reduce(function(a,c){return a+(c.remaining||0);},0);
     var ta = cs.reduce(function(a,c){return a+(c.total||0);},0);
-    var csHtml = cs.length ? cs.map(function(c,i) {
+    var csHtml = cs.length ? cs.map(function(c) {
       var t = c.teacherId ? DB.teachers[c.teacherId] : null;
       return '<div class="course-item"><div><div class="course-n">'+esc(c.name)+'</div><div class="course-l">教师：'+(t?esc(t.name):'未分配')+'</div></div><div><span class="course-r">'+c.remaining+'</span><span class="course-t">/'+c.total+'</span></div></div>';
     }).join('') : '<div style="font-size:12px;color:#bbb;padding:4px 0">暂无课程</div>';
-    return '<div class="card"><div class="ch"><span class="cn">'+esc(s.name)+'</span><span class="tag '+(tr>0?'tag-g':'tag-o')+'">'+tr+'/'+ta+' 课时</span></div><div class="ca"><button class="btn btn-g btn-sm" onclick="openAddCourse(\''+s.id+'\')">+课程</button><button class="btn btn-b btn-sm" onclick="addStudentLesson(\''+s.id+'\')">上课</button></div><div class="course-list">'+csHtml+'</div></div>';
+    return '<div class="card"><div class="ch"><span class="cn">'+esc(s.name)+'</span><span class="tag '+(tr>0?'tag-g':'tag-o')+'">'+tr+'/'+ta+' 课时</span></div><div class="ca"><button class="btn btn-g btn-sm" onclick="openAddCourse(\''+s.id+'\')">+课程</button><button class="btn btn-b btn-sm" onclick="openAddLesson(\''+s.id+'\',0)">上课</button></div><div class="course-list">'+csHtml+'</div></div>';
   }).join('');
 }
 
@@ -382,24 +402,24 @@ function renderLessons() {
   }).join('');
 }
 
-// 管理员操作
-function addStudent() {
+async function addStudent() {
   var name = document.getElementById('m-s-name').value.trim();
   var pass = document.getElementById('m-s-pass').value || '123456';
   if (!name) { toast('请输入姓名'); return; }
   var id = 's'+Date.now();
   DB.students[id] = {id:id, name:name, courses:[], createdAt:new Date().toISOString()};
   DB.accounts[id] = {id:id, username:name, password:pass, name:name, role:'student'};
-  saveDB();
+  await saveCloud(DB);
   hideModal('modal-student');
   toast('已添加：'+name);
   document.getElementById('m-s-name').value = '';
   document.getElementById('m-s-pass').value = '';
   renderStudents();
   renderDash();
+  updateBadge('✓');
 }
 
-function addTeacher() {
+async function addTeacher() {
   var name = document.getElementById('m-t-name').value.trim();
   var pass = document.getElementById('m-t-pass').value;
   if (!name) { toast('请输入姓名'); return; }
@@ -407,13 +427,14 @@ function addTeacher() {
   var id = 't'+Date.now();
   DB.teachers[id] = {id:id, name:name};
   DB.accounts[id] = {id:id, username:name, password:pass, name:name, role:'teacher'};
-  saveDB();
+  await saveCloud(DB);
   hideModal('modal-teacher');
   toast('已添加：'+name);
   document.getElementById('m-t-name').value = '';
   document.getElementById('m-t-pass').value = '';
   renderTeachers();
   renderDash();
+  updateBadge('✓');
 }
 
 function openAddCourse(sid) {
@@ -428,7 +449,7 @@ function openAddCourse(sid) {
   showModal('modal-course');
 }
 
-function addCourse() {
+async function addCourse() {
   var sid = document.getElementById('m-c-sid').value;
   var name = document.getElementById('m-c-name').value.trim();
   var hours = parseInt(document.getElementById('m-c-hours').value) || 0;
@@ -438,23 +459,17 @@ function addCourse() {
   var st = DB.students[sid];
   if (!st.courses) st.courses = [];
   st.courses.push({name:name, total:hours, remaining:hours, teacherId:tid||null});
-  saveDB();
+  await saveCloud(DB);
   hideModal('modal-course');
   toast('已添加：'+name);
   renderStudents();
   renderDash();
-}
-
-function addStudentLesson(sid) {
-  var st = DB.students[sid];
-  var cs = st.courses || [];
-  var withRem = cs.filter(function(c){return c.remaining>0;});
-  if (!withRem.length) { toast('该学员暂无剩余课时'); return; }
-  openAddLesson(sid, 0);
+  updateBadge('✓');
 }
 
 function openAddLesson(sid, cidx) {
   var st = DB.students[sid];
+  if (!st.courses || st.courses.length === 0) { toast('该学员暂无课程'); return; }
   var c = st.courses[cidx];
   document.getElementById('m-l-sid').value = sid;
   document.getElementById('m-l-cidx').value = cidx;
@@ -467,28 +482,27 @@ function openAddLesson(sid, cidx) {
   showModal('modal-lesson');
 }
 
-function addLesson() {
+async function addLesson() {
   var sid = document.getElementById('m-l-sid').value;
   var cidx = parseInt(document.getElementById('m-l-cidx').value);
   var date = document.getElementById('m-l-date').value;
   var fb = document.getElementById('m-l-fb').value.trim();
   if (!date) { toast('请选择时间'); return; }
   if (!fb) { toast('请填写反馈'); return; }
-  var st = DB.students[sid];
-  var c = st.courses[cidx];
+  var c = DB.students[sid].courses[cidx];
   if (c.remaining <= 0) { toast('无剩余课时'); return; }
   c.remaining--;
   DB.lessons.push({id:'l'+Date.now(), studentId:sid, courseIdx:cidx, courseName:c.name, teacherId:currentUser.id, lessonDate:date, feedback:fb, createdAt:new Date().toISOString()});
-  saveDB();
+  await saveCloud(DB);
   hideModal('modal-lesson');
   toast('已记录！剩余'+c.remaining+'课');
   renderStudents();
   renderLessons();
   renderMyStudents();
   renderDash();
+  updateBadge('✓');
 }
 
-// 教师端
 function renderMyStudents() {
   var el = document.getElementById('my-students');
   var my = [];
@@ -512,7 +526,6 @@ function renderMyLessons() {
   }).join('');
 }
 
-// 学生端
 function renderMyCourses() {
   var el = document.getElementById('my-courses');
   var st = DB.students[currentUser.id];
@@ -534,49 +547,19 @@ function renderMyFeedbacks() {
   }).join('');
 }
 
-// 数据同步
-function exportDB() {
-  var str = JSON.stringify(DB);
-  var enc = btoa(unescape(encodeURIComponent(str)));
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(enc).then(function(){
-      toast('已复制！');
-      document.getElementById('syncArea').value = enc;
-    }).catch(function(){
-      document.getElementById('syncArea').value = enc;
-      toast('请手动复制');
-    });
-  } else {
-    document.getElementById('syncArea').value = enc;
-    toast('请手动复制');
-  }
-}
-
-function importDB() {
-  var enc = document.getElementById('syncArea').value.trim();
-  if (!enc) { toast('请粘贴数据'); return; }
-  try {
-    var dec = decodeURIComponent(escape(atob(enc)));
-    var data = JSON.parse(dec);
-    if (data.accounts && data.students !== undefined) {
-      DB = data;
-      saveDB();
-      toast('导入成功！');
-      document.getElementById('syncArea').value = '';
-      if (currentUser) showApp();
-    } else { toast('格式错误'); }
-  } catch(e) { toast('导入失败'); }
+async function forceSync() {
+  updateBadge('⟳');
+  var cloud = await fetchCloud();
+  if (cloud) { DB = cloud; toast('已刷新'); if (currentUser) showApp(); updateBadge('✓'); }
+  else { toast('刷新失败'); updateBadge('☁️'); }
 }
 
 // 启动
-init();
-var savedUser = sessionStorage.getItem('crm_user');
-if (savedUser) {
-  try { currentUser = JSON.parse(savedUser); showApp(); } catch(e) {}
+document.getElementById('lp').onkeypress = function(e){if(e.key==='Enter')login();};
+var saved = sessionStorage.getItem('crm_user');
+if (saved) {
+  try { currentUser = JSON.parse(saved); (async function(){await fetchCloud(); initData(DB); showApp();})(); } catch(e) {}
 }
-
-// 回车登录
-document.getElementById('lp').onkeypress = function(e) { if (e.key === 'Enter') login(); };
 </script>
 </body>
 </html>
