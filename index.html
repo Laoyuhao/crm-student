@@ -165,6 +165,7 @@ function closeModal(id) {
 
 // 登录
 function doLogin() {
+  console.log('doLogin called');
   const u = document.getElementById('lu').value.trim();
   const p = document.getElementById('lp').value;
   const err = document.getElementById('loginErr');
@@ -174,7 +175,16 @@ function doLogin() {
   
   toast('登录中...');
   
+  // 检查 Firebase 是否可用
+  if (typeof firebase === 'undefined' || !firebase.database) {
+    err.textContent = 'Firebase 未加载，请刷新页面重试';
+    console.error('Firebase not loaded');
+    return;
+  }
+  
+  console.log('Fetching accounts...');
   db.ref('accounts').once('value').then(snapshot => {
+    console.log('Accounts loaded:', snapshot.val());
     const accounts = snapshot.val() || {};
     let found = null;
     Object.values(accounts).forEach(a => {
@@ -191,7 +201,7 @@ function doLogin() {
     showApp();
   }).catch(e => {
     err.textContent = '登录失败：' + e.message;
-    console.error(e);
+    console.error('Login error:', e);
   });
 }
 
@@ -323,22 +333,33 @@ function saveTeacher() {
 
 // 初始化
 function initAdmin() {
+  console.log('initAdmin called');
+  if (typeof firebase === 'undefined' || !firebase.database) {
+    console.error('Firebase not available');
+    document.getElementById('loginErr').textContent = '系统初始化失败，请刷新页面';
+    return;
+  }
+  
   db.ref('accounts/admin').once('value').then(s => {
+    console.log('Admin check:', s.val());
     if (!s.val()) {
+      console.log('Creating admin account...');
       db.ref('accounts/admin').set({
         id: 'admin',
         username: 'admin',
         password: 'admin123',
         name: '管理员',
         role: 'admin'
-      });
+      }).then(() => console.log('Admin created'));
     }
-  });
+  }).catch(e => console.error('Init error:', e));
 }
 
 // 页面加载时
 window.onload = function() {
-  initAdmin();
+  console.log('Page loaded');
+  setTimeout(initAdmin, 1000); // 延迟1秒确保 Firebase 加载完成
+  
   const saved = sessionStorage.getItem('crm_user');
   if (saved) {
     currentUser = JSON.parse(saved);
