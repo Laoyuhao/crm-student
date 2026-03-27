@@ -148,7 +148,13 @@ function setData(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-let allData = getData();
+let allData = getData() || {
+  students: {},
+  teachers: {},
+  accounts: {
+    'admin': { id: 'admin', username: 'admin', password: 'admin123', name: '管理员', role: 'admin' }
+  }
+};
 let currentUser = null;
 
 function toast(msg) {
@@ -324,6 +330,19 @@ function importData() {
 
 // 页面加载
 window.onload = function() {
+  // 确保数据已加载
+  allData = getData();
+  if (!allData || !allData.accounts) {
+    allData = {
+      students: {},
+      teachers: {},
+      accounts: {
+        'admin': { id: 'admin', username: 'admin', password: 'admin123', name: '管理员', role: 'admin' }
+      }
+    };
+    setData(allData);
+  }
+  
   const saved = sessionStorage.getItem('crm_user');
   if (saved) {
     currentUser = JSON.parse(saved);
