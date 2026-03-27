@@ -466,21 +466,26 @@ function closeAs(){document.getElementById('asOvl').classList.add('hidden')}
 function asAddRow(){const d=document.createElement('div');d.style='display:flex;gap:8px;margin-bottom:8px';d.innerHTML='<input class="si cr-name" placeholder="课程名称" style="flex:2;margin-bottom:0"><input class="si cr-hours" type="number" placeholder="课时" min="1" style="width:80px;margin-bottom:0"><button class="del-btn" onclick="this.parentElement.remove()">×</button>';document.getElementById('as-crs').appendChild(d);}
 
 async function saveStudent(){
-  const name=document.getElementById('as-name').value.trim(),phone=document.getElementById('as-phone').value.trim(),notes=document.getElementById('as-notes').value.trim();
-  if(!name){toast('请输入学生姓名');return}
-  const courses=[];
-  document.querySelectorAll('#as-crs div').forEach(row=>{
-    const n=row.querySelector('.cr-name').value.trim(),h=parseInt(row.querySelector('.cr-hours').value)||0;
-    if(n&&h>0)courses.push({name:n,total:h,remaining:h});
-  });
-  if(!courses.length){toast('请至少添加一个课程');return}
-  const studentId=Date.now();
-  const stu={studentId,name,phone,notes,courses,createdAt:new Date().toISOString()};
-  const acc={username:name,password:'123456',name,role:'student',studentId};
-  await db.collection('students').doc(String(studentId)).set(stu);
-  await db.collection('accounts').doc(String(studentId)).set(acc);
-  await loadAllData();
-  closeAs();renderAs();renderAd();toast('✅ 已添加学员「'+name+'」，账号：'+name+' 密码：123456');
+  console.log('saveStudent called');
+  try{
+    const name=document.getElementById('as-name').value.trim(),phone=document.getElementById('as-phone').value.trim(),notes=document.getElementById('as-notes').value.trim();
+    if(!name){toast('请输入学生姓名');return}
+    const courses=[];
+    document.querySelectorAll('#as-crs div').forEach(row=>{
+      const n=row.querySelector('.cr-name').value.trim(),h=parseInt(row.querySelector('.cr-hours').value)||0;
+      if(n&&h>0)courses.push({name:n,total:h,remaining:h});
+    });
+    if(!courses.length){toast('请至少添加一个课程');return}
+    toast('保存中...');
+    const studentId=Date.now();
+    const stu={studentId,name,phone,notes,courses,createdAt:new Date().toISOString()};
+    const acc={username:name,password:'123456',name,role:'student',studentId};
+    await db.collection('students').doc(String(studentId)).set(stu);
+    await db.collection('accounts').doc(String(studentId)).set(acc);
+    await loadAllData();
+    closeAs();renderAs();renderAd();
+    toast('✅ 已添加学员「'+name+'」，账号：'+name+' 密码：123456');
+  }catch(e){console.error(e);toast('保存失败：'+e.message);}
 }
 
 function openAsd(studentId){
@@ -556,15 +561,20 @@ function renderAt(){
 function openAt(){document.getElementById('atOvl').classList.remove('hidden');document.getElementById('at-name').value='';document.getElementById('at-pass').value=''}
 function closeAt(){document.getElementById('atOvl').classList.add('hidden')}
 async function saveTeacher(){
-  const name=document.getElementById('at-name').value.trim(),pass=document.getElementById('at-pass').value;
-  if(!name||!pass){toast('请填写完整信息');return}
-  const teacherId=Date.now();
-  const tea={teacherId,name};
-  const acc={username:name,password:pass,name,role:'teacher',teacherId};
-  await db.collection('teachers').doc(String(teacherId)).set(tea);
-  await db.collection('accounts').doc(String(teacherId)).set(acc);
-  await loadAllData();
-  closeAt();renderAt();renderAd();toast('✅ 已添加教师「'+name+'」，账号：'+name+' 密码：'+pass);
+  console.log('saveTeacher called');
+  try{
+    const name=document.getElementById('at-name').value.trim(),pass=document.getElementById('at-pass').value;
+    if(!name||!pass){toast('请填写完整信息');return}
+    toast('保存中...');
+    const teacherId=Date.now();
+    const tea={teacherId,name};
+    const acc={username:name,password:pass,name,role:'teacher',teacherId};
+    await db.collection('teachers').doc(String(teacherId)).set(tea);
+    await db.collection('accounts').doc(String(teacherId)).set(acc);
+    await loadAllData();
+    closeAt();renderAt();renderAd();
+    toast('✅ 已添加教师「'+name+'」，账号：'+name+' 密码：'+pass);
+  }catch(e){console.error(e);toast('保存失败：'+e.message);}
 }
 async function delTeacher(teacherId){
   if(!confirm('确认删除该教师？该教师的所有上课记录将保留。'))return;
@@ -618,27 +628,32 @@ function asgnRenderCourses(){
   });
 }
 async function saveAssignment(){
-  const sid=parseInt(document.getElementById('asgn-stu').value);
-  const cName=document.getElementById('asgn-course').value;
-  const tid=parseInt(document.getElementById('asgn-tea').value);
-  const hours=parseInt(document.getElementById('asgn-hours').value)||0;
-  if(hours<1){toast('请输入有效的分配课时数');return}
-  const stu=allData.students.find(s=>s.studentId===sid);if(!stu)return;
-  const c=stu.courses.find(x=>x.name===cName);if(!c)return;
-  const asgn=allData.assignments;
-  let assigned=0;
-  asgn.forEach(a=>{if(a.studentId===sid&&a.courseName===cName)assigned+=a.hours||0;});
-  if(assigned+hours>c.total){toast('分配课时超出课程总量（已分配'+assigned+'节，最多可再分'+(c.total-assigned)+'节）');return}
-  const idx=asgn.findIndex(a=>a.studentId===sid&&a.courseName===cName&&a.teacherId===tid);
-  const aid=Date.now();
-  if(idx>=0){
-    const a=asgn[idx];
-    await db.collection('assignments').doc(a._id).update({hours:a.hours+hours});
-  }else{
-    await db.collection('assignments').doc(String(aid)).set({studentId:sid,courseName:cName,teacherId:tid,hours});
-  }
-  await loadAllData();
-  closeAssign();renderAssignList();renderAd();toast('✅ 分配成功');
+  console.log('saveAssignment called');
+  try{
+    const sid=parseInt(document.getElementById('asgn-stu').value);
+    const cName=document.getElementById('asgn-course').value;
+    const tid=parseInt(document.getElementById('asgn-tea').value);
+    const hours=parseInt(document.getElementById('asgn-hours').value)||0;
+    if(hours<1){toast('请输入有效的分配课时数');return}
+    const stu=allData.students.find(s=>s.studentId===sid);if(!stu)return;
+    const c=stu.courses.find(x=>x.name===cName);if(!c)return;
+    toast('保存中...');
+    const asgn=allData.assignments;
+    let assigned=0;
+    asgn.forEach(a=>{if(a.studentId===sid&&a.courseName===cName)assigned+=a.hours||0;});
+    if(assigned+hours>c.total){toast('分配课时超出课程总量（已分配'+assigned+'节，最多可再分'+(c.total-assigned)+'节）');return}
+    const idx=asgn.findIndex(a=>a.studentId===sid&&a.courseName===cName&&a.teacherId===tid);
+    const aid=Date.now();
+    if(idx>=0){
+      const a=asgn[idx];
+      await db.collection('assignments').doc(a._id).update({hours:a.hours+hours});
+    }else{
+      await db.collection('assignments').doc(String(aid)).set({studentId:sid,courseName:cName,teacherId:tid,hours});
+    }
+    await loadAllData();
+    closeAssign();renderAssignList();renderAd();
+    toast('✅ 分配成功');
+  }catch(e){console.error(e);toast('保存失败：'+e.message);}
 }
 
 // ADMIN RECORDS
