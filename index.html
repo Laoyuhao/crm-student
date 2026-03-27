@@ -755,6 +755,7 @@ function renderMyStudents() {
 // ===== 教师端：上课记录 =====
 function renderMyLessons() {
   var el = document.getElementById('teacher-lessons');
+  // 只显示自己的上课记录
   var myLessons = DB.lessons.filter(function(l){ return l.teacherId === currentUser.id; })
     .sort(function(a,b){ return new Date(b.lessonDate) - new Date(a.lessonDate); });
   
@@ -764,7 +765,7 @@ function renderMyLessons() {
     var s = DB.students[l.studentId];
     return '<div class="lesson-item">' +
       '<div class="lesson-d">📅 ' + dt(l.lessonDate) + '</div>' +
-      '<div style="font-weight:600">' + esc(s ? s.name : '') + '</div>' +
+      '<div style="font-weight:600;margin-bottom:4px">👨‍🎓 学员：' + esc(s ? s.name : '未知') + '</div>' +
       '<div class="lesson-h">销 ' + l.hours + ' 课时</div>' +
       '<div class="lesson-f">' + esc(l.feedback || '无反馈') + '</div>' +
     '</div>';
