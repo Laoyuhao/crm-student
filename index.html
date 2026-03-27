@@ -459,7 +459,7 @@ function renderAs(){
   document.getElementById('as-list').innerHTML=f.length?f.map(s=>{
     const nc=s.courses?s.courses.length:0;
     const rem=s.courses?s.courses.reduce((a,c)=>a+c.remaining,0):0;
-    return'<div class="card" onclick="openAsd('+s.id+')"><div class="card-row"><div><span class="card-name">'+s.name+'</span><span class="card-sub" style="margin-left:8px">'+(s.phone||'')+'</span></div><span style="color:#aaa;font-size:20px">›</span></div><div style="font-size:13px;color:#aaa;margin-top:4px">'+nc+'个课程 · 剩余'+rem+'课时</div></div>';
+    return'<div class="card"><div class="card-row" onclick="openAsd('+s.id+')" style="cursor:pointer"><div><span class="card-name">'+s.name+'</span><span class="card-sub" style="margin-left:8px">'+(s.phone||'')+'</span></div><span style="color:#aaa;font-size:20px">›</span></div><div style="font-size:13px;color:#aaa;margin-top:4px">'+nc+'个课程 · 剩余'+rem+'课时</div><div class="card-action"><button class="btn btn-sm btn-r" onclick="event.stopPropagation();delStudent('+s.id+')">🗑️ 删除学员</button></div></div>';
   }).join(''):'<div class="empty">暂无学生</div>';
 }
 
@@ -544,7 +544,7 @@ function renderAt(){
     const tl=les.filter(l=>l.teacherId===t.id);
     const ttl=tl.reduce((a,l)=>a+l.hours,0);
     const fbs=tl.filter(l=>l.feedback).length;
-    return'<div class="card"><div style="margin-bottom:8px"><span style="font-size:17px;font-weight:700">👩‍🏫 '+t.name+'</span> <span class="card-sub">'+t.username+'</span></div><div class="card-sub">共 '+tl.length+' 节课 · '+ttl+' 课时 · '+fbs+' 条反馈</div></div>';
+    return'<div class="card"><div style="margin-bottom:8px"><span style="font-size:17px;font-weight:700">👩‍🏫 '+t.name+'</span> <span class="card-sub">'+t.username+'</span></div><div class="card-sub">共 '+tl.length+' 节课 · '+ttl+' 课时 · '+fbs+' 条反馈</div><div class="card-action"><button class="btn btn-sm btn-r" onclick="delTeacher('+t.id+')">🗑️ 删除教师</button></div></div>';
   }).join(''):'<div class="empty">暂无教师</div>';
 }
 
@@ -560,6 +560,25 @@ function saveTeacher(){
   acc.push({username:user,password:pass,name,role:'teacher',teacherId:id});sv(K_A,acc);
   closeAt();renderAt();renderAd();toast('✅ 已添加教师「'+name+'」');
 }
+// 删除学员
+function delStudent(id){
+  if(!confirm('确认删除该学员？删除后不可恢复！'))return;
+  const stu=ld(K_S);const s=stu.find(x=>x.id===id);if(!s)return;
+  sv(K_S,stu.filter(x=>x.id!==id));
+  sv(K_L,ld(K_L).filter(l=>l.studentId!==id));
+  sv(K_G,ld(K_G).filter(a=>a.studentId!==id));
+  sv(K_A,ld(K_A).filter(a=>a.studentId!==id));
+  closeAsd();renderAs();renderAd();toast('✅ 已删除');
+}
+// 删除教师
+function delTeacher(id){
+  if(!confirm('确认删除该教师？该教师的所有上课记录将保留。'))return;
+  const tea=ld(K_T);const t=tea.find(x=>x.id===id);if(!t)return;
+  sv(K_T,tea.filter(x=>x.id!==id));
+  sv(K_G,ld(K_G).filter(a=>a.teacherId!==id));
+  sv(K_A,ld(K_A).filter(a=>a.teacherId!==id));
+  renderAt();renderAd();toast('✅ 已删除教师「'+t.name+'」');
+}
 
 // ASSIGN
 function renderAssignList(){
@@ -568,9 +587,10 @@ function renderAssignList(){
   document.getElementById('assign-list').innerHTML=f.length?f.map(s=>{
     const sc=(s.courses||[]);
     const rows=sc.map(c=>{
-      const a=asgn.find(x=>x.studentId===s.id&&x.courseName===c.name);
-      const t=a?tea.find(x=>x.id===a.teacherId):null;
-      return'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0"><span>'+c.name+' '+c.remaining+'/'+c.total+'节</span><span class="badge-'+(t?'b':'o')+'">'+(t?t.name:'未分配')+'</span></div>';
+      const assignedList=asgn.filter(x=>x.studentId===s.id&&x.courseName===c.name);
+      const tNames=assignedList.map(a=>{const t=tea.find(x=>x.id===a.teacherId);return(t?t.name:'?')+'('+a.hours+'节)';}).join('、');
+      const assignedTotal=assignedList.reduce((sum,a)=>sum+(a.hours||0),0);
+      return'<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0"><span>'+c.name+'（已分配'+assignedTotal+'/'+c.total+'节）</span><span class="badge-'+(tNames?'b':'o')+'">'+(tNames||'未分配')+'</span></div>';
     }).join('');
     return'<div class="card"><div class="card-row"><div><span class="card-name">'+s.name+'</span></div></div>'+rows+'</div>';
   }).join(''):'<div class="empty">暂无学生</div>';
@@ -583,25 +603,39 @@ function openAssign(){
   asgnRenderCourses();
   const tSel=document.getElementById('asgn-tea');tSel.innerHTML='';
   tea.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;tSel.appendChild(o);});
+  document.getElementById('asgn-hours').value='';
   document.getElementById('assignOvl').classList.remove('hidden');
 }
 function closeAssign(){document.getElementById('assignOvl').classList.add('hidden')}
 function asgnRenderCourses(){
   const sid=parseInt(document.getElementById('asgn-stu').value);
   const stu=ld(K_S).find(s=>s.id===sid);if(!stu)return;
+  const asgn=ld(K_G);
   const sel=document.getElementById('asgn-course');sel.innerHTML='';
-  (stu.courses||[]).forEach(c=>{const o=document.createElement('option');o.value=c.name;o.textContent=c.name;sel.appendChild(o);});
+  (stu.courses||[]).forEach(c=>{
+    let assigned=0;
+    asgn.forEach(a=>{if(a.studentId===sid&&a.courseName===c.name)assigned+=a.hours||0;});
+    const o=document.createElement('option');o.value=c.name;o.textContent=c.name+'（总量'+c.total+'节，已分配'+assigned+'节，剩余'+(c.total-assigned)+'节）';sel.appendChild(o);
+  });
 }
 function saveAssignment(){
   const sid=parseInt(document.getElementById('asgn-stu').value);
   const cName=document.getElementById('asgn-course').value;
   const tid=parseInt(document.getElementById('asgn-tea').value);
+  const hours=parseInt(document.getElementById('asgn-hours').value)||0;
+  if(hours<1){toast('请输入有效的分配课时数');return}
+  const stu=ld(K_S).find(s=>s.id===sid);if(!stu)return;
+  const c=stu.courses.find(x=>x.name===cName);if(!c)return;
   const asgn=ld(K_G);
-  const idx=asgn.findIndex(a=>a.studentId===sid&&a.courseName===cName);
-  if(idx>=0)asgn[idx].teacherId=tid;
-  else asgn.push({studentId:sid,courseName:cName,teacherId:tid});
+  // 计算该课程已分配的课时
+  let assigned=0;
+  asgn.forEach(a=>{if(a.studentId===sid&&a.courseName===cName)assigned+=a.hours||0;});
+  if(assigned+hours>c.total){toast('分配课时超出课程总量（已分配'+assigned+'节，最多可再分'+(c.total-assigned)+'节）');return}
+  const idx=asgn.findIndex(a=>a.studentId===sid&&a.courseName===cName&&a.teacherId===tid);
+  if(idx>=0)asgn[idx].hours+=hours;
+  else asgn.push({studentId:sid,courseName:cName,teacherId:tid,hours});
   sv(K_G,asgn);
-  closeAssign();renderAssignList();toast('✅ 分配成功');
+  closeAssign();renderAssignList();renderAd();toast('✅ 分配成功');
 }
 
 // ADMIN RECORDS
@@ -619,7 +653,7 @@ function renderAr(){
 // TEACHER
 function renderTd(){
   if(!CU.teacherId)return;
-  const stu=ld(K_S),tea=ld(K_T),asgn=ld(K_G).filter(a=>a.teacherId===CU.teacherId);
+  const stu=ld(K_S),asgn=ld(K_G).filter(a=>a.teacherId===CU.teacherId);
   const les=ld(K_L).filter(l=>l.teacherId===CU.teacherId);
   const now=new Date(),mS=new Date(now.getFullYear(),now.getMonth(),1);
   let mT=0;les.forEach(l=>{if(new Date(l.lessonDate)>=mS)mT+=l.hours});
@@ -630,13 +664,12 @@ function renderTd(){
   
   document.getElementById('td-list').innerHTML=myStuIds.length?myStuIds.map(sid=>{
     const s=stu.find(x=>x.id===sid);if(!s)return'';
-    const myCourses=asgn.filter(a=>a.studentId===sid).map(a=>a.courseName);
-    const courseRows=myCourses.map(cn=>{
-      const c=s.courses.find(x=>x.name===cn);
+    const myCourses=asgn.filter(a=>a.studentId===sid);
+    const courseRows=myCourses.map(ac=>{
+      const c=s.courses.find(x=>x.name===ac.courseName);
       if(!c)return'';
-      const cl=les.filter(l=>l.studentId===sid&&l.courseName===cn);
-      const used=c.total-c.remaining;
-      return'<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0"><span>'+cn+'</span><span>'+c.remaining+'/'+c.total+'节 (已上'+used+'节)</span></div>';
+      const used=les.filter(l=>l.studentId===sid&&l.courseName===ac.courseName).reduce((a,l)=>a+l.hours,0);
+      return'<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0"><span>'+ac.courseName+'</span><span style="color:#1a7a4a;font-weight:600">分配'+ac.hours+'节 · 剩余'+c.remaining+'节</span></div>';
     }).join('');
     return'<div class="card" onclick="openTsd('+sid+')"><div class="card-row"><div><span class="card-name">'+s.name+'</span></div><span style="color:#aaa">›</span></div>'+courseRows+'</div>';
   }).join(''):'<div class="empty">暂无分配的学生</div>';
@@ -648,12 +681,13 @@ function openTsd(id){
   const les=ld(K_L).filter(l=>l.studentId===id&&l.teacherId===CU.teacherId).reverse();
   const today=fmtDate(new Date().toISOString());
   
-  const sections=asgn.map(a=>{
-    const c=s.courses.find(x=>x.name===a.courseName);
+  const sections=asgn.map(ac=>{
+    const c=s.courses.find(x=>x.name===ac.courseName);
     if(!c)return'';
-    const cl=les.filter(l=>l.courseName===c.name);
+    const ck=ac.courseName.replace(/\s/g,'_');
+    const cl=les.filter(l=>l.courseName===ac.courseName);
     const hist=cl.map(l=>'<div style="padding:8px 0;border-bottom:1px solid #e0e0e0"><div style="display:flex;justify-content:space-between"><span style="font-size:13px;color:#e74c3c;font-weight:600">'+l.hours+'节</span><span style="font-size:12px;color:#aaa">'+fmtDate(l.lessonDate)+'</span></div>'+(l.feedback?'<div style="font-size:13px;color:#666;margin-top:4px;padding:6px;background:#fafafa;border-radius:6px">'+l.feedback+'</div>':'')+'</div>').join('');
-    return'<div class="ds"><div class="ds-name">'+c.name+' <span style="color:#1a7a4a;font-size:14px">剩余 '+c.remaining+'/'+c.total+'节</span></div><div class="ds-row"><label style="font-size:13px;color:#aaa">上课时间：</label><input type="date" id="td-date-'+c.name.replace(/\s/g,'_')+'" value="'+today+'"></div><div class="ds-row"><label style="font-size:13px;color:#aaa">销课节数：</label><input type="number" id="td-h-'+c.name.replace(/\s/g,'_')+'" value="1" min="1" max="'+c.remaining+'"><button class="btn btn-g" style="flex:1" onclick="doDeduct('+id+',\''+c.name+'\')">销课</button></div><div class="ds-fb-label">课堂反馈（必填）</div><textarea id="td-fb-'+c.name.replace(/\s/g,'_')+'" placeholder="记录本次上课情况..."></textarea><div style="margin-top:8px">'+hist+'</div></div>';
+    return'<div class="ds"><div class="ds-name">'+ac.courseName+' <span style="color:#1a7a4a;font-size:14px">分配'+ac.hours+'节 · 剩余'+c.remaining+'节</span></div><div class="ds-row"><label style="font-size:13px;color:#aaa">上课时间：</label><input type="date" id="td-date-'+ck+'" value="'+today+'"></div><div class="ds-row"><label style="font-size:13px;color:#aaa">销课节数：</label><input type="number" id="td-h-'+ck+'" value="1" min="1" max="'+Math.min(ac.hours,c.remaining)+'"><button class="btn btn-g" style="flex:1" onclick="doDeduct('+id+',\''+ac.courseName+'\')">销课</button></div><div class="ds-fb-label">课堂反馈（必填）</div><textarea id="td-fb-'+ck+'" placeholder="记录本次上课情况..."></textarea><div style="margin-top:8px">'+hist+'</div></div>';
   }).join('');
   
   document.getElementById('tsdC').innerHTML='<div class="sdh"><div class="sdh-name">'+stu.name+'</div><div class="sdh-meta">'+(stu.phone||'无联系方式')+'</div></div>'+sections+'<button class="btn btn-gray btn-block" onclick="closeTsd()" style="margin-top:8px">关闭</button>';
@@ -670,13 +704,13 @@ function doDeduct(sid,cName){
   const feedback=document.getElementById('td-fb-'+cKey).value.trim();
   if(!lessonDate){toast('请选择上课时间');return}
   if(!feedback){toast('请填写课堂反馈');return}
-  if(c.remaining<hours){toast('❌ 课时不足，仅剩 '+c.remaining+' 节');return}
+  if(c.remaining<hours){toast('课时不足，仅剩 '+c.remaining+' 节');return}
   c.remaining-=hours;
   const les=ld(K_L);
   les.push({id:Date.now(),studentId:sid,courseName:cName,hours,teacherId:CU.teacherId,teacherName:CU.name,lessonDate:new Date(lessonDate).toISOString(),feedback,createdAt:new Date().toISOString()});
   sv(K_L,les);sv(K_S,stu);
   toast('✅ 销课成功！');
-  openTsd(sid);
+  closeTsd();
   renderTd();renderTr();renderAd();
 }
 
