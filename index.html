@@ -370,27 +370,30 @@ function showApp() {
   document.getElementById('loginPage').style.display = 'none';
   document.getElementById('appPage').classList.add('show');
   
-  // 先隐藏所有标签栏
+  // 先隐藏所有标签栏 - 使用style确保生效
   var adminTabs = document.getElementById('adminTabs');
   var teacherTabs = document.getElementById('teacherTabs');
   var studentTabs = document.getElementById('studentTabs');
   
-  adminTabs.classList.add('hidden');
-  teacherTabs.classList.add('hidden');
-  studentTabs.classList.add('hidden');
+  // 强制隐藏
+  adminTabs.style.display = 'none';
+  teacherTabs.style.display = 'none';
+  studentTabs.style.display = 'none';
   
   console.log('当前用户角色:', currentUser.role, '用户:', currentUser.name);
-  console.log('adminTabs hidden:', adminTabs.classList.contains('hidden'));
   
   if (currentUser.role === 'admin') {
+    adminTabs.style.display = 'flex';
     adminTabs.classList.remove('hidden');
     document.getElementById('curRole').textContent = '👑 管理员';
     switchTab('dashboard', adminTabs.querySelector('.tab'));
   } else if (currentUser.role === 'teacher') {
+    teacherTabs.style.display = 'flex';
     teacherTabs.classList.remove('hidden');
     document.getElementById('curRole').textContent = '👩‍🏫 ' + currentUser.name;
     switchTab('myStudents', teacherTabs.querySelector('.tab'));
   } else if (currentUser.role === 'student') {
+    studentTabs.style.display = 'flex';
     studentTabs.classList.remove('hidden');
     document.getElementById('curRole').textContent = '👨‍🎓 ' + currentUser.name;
     switchTab('myInfo', studentTabs.querySelector('.tab'));
