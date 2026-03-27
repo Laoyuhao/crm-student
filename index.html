@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>艺风粤播 · 课时管理系统</title>
+<title>艺风粤播 · 课时管理系统 v9.5</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif}
@@ -911,17 +911,27 @@ async function forceSync() {
 
 // 启动
 document.getElementById('lp').onkeypress = function(e){if(e.key==='Enter')login();};
+
+// 清除可能缓存的旧会话
 var saved = sessionStorage.getItem('crm_user');
 if (saved) {
   try {
     currentUser = JSON.parse(saved);
+    console.log('恢复会话，角色:', currentUser.role);
     (async function(){
       var cloud = await fetchCloud();
       initDB(cloud);
       showApp();
     })();
-  } catch(e) {}
+  } catch(e) {
+    console.log('会话恢复失败');
+    sessionStorage.removeItem('crm_user');
+  }
 }
+
+// 页面加载提示
+console.log('=== 课时管理系统 v9.5 已加载 ===');
+console.log('如果看到管理界面，请: 1.退出登录 2.重新登录教师账号');
 </script>
 </body>
 </html>
