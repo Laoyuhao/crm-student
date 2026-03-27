@@ -283,6 +283,13 @@ const db=firebase.firestore();
 let CU=null;
 let allData={students:[],teachers:[],lessons:[],accounts:[],assignments:[]};
 let _dbReady=false;
+let _firebaseReady=false;
+
+// 等待 Firebase 初始化
+firebase.firestore().enablePersistence().catch(err=>{
+  if(err.code=='failed-precondition')console.log('Persistence failed');
+  else if(err.code=='unimplemented')console.log('Persistence not available');
+});
 
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
@@ -480,12 +487,16 @@ async function saveStudent(){
     const studentId=Date.now();
     const stu={studentId,name,phone,notes,courses,createdAt:new Date().toISOString()};
     const acc={username:name,password:'123456',name,role:'student',studentId};
-    await db.collection('students').doc(String(studentId)).set(stu);
-    await db.collection('accounts').doc(String(studentId)).set(acc);
+    console.log('Saving student:',stu);
+    console.log('Saving account:',acc);
+    const stuRef=await db.collection('students').doc(String(studentId)).set(stu);
+    console.log('Student saved:',stuRef);
+    const accRef=await db.collection('accounts').doc(String(studentId)).set(acc);
+    console.log('Account saved:',accRef);
     await loadAllData();
     closeAs();renderAs();renderAd();
     toast('✅ 已添加学员「'+name+'」，账号：'+name+' 密码：123456');
-  }catch(e){console.error(e);toast('保存失败：'+e.message);}
+  }catch(e){console.error('Save error:',e);toast('保存失败：'+e.message);}
 }
 
 function openAsd(studentId){
@@ -569,12 +580,16 @@ async function saveTeacher(){
     const teacherId=Date.now();
     const tea={teacherId,name};
     const acc={username:name,password:pass,name,role:'teacher',teacherId};
-    await db.collection('teachers').doc(String(teacherId)).set(tea);
-    await db.collection('accounts').doc(String(teacherId)).set(acc);
+    console.log('Saving teacher:',tea);
+    console.log('Saving account:',acc);
+    const teaRef=await db.collection('teachers').doc(String(teacherId)).set(tea);
+    console.log('Teacher saved:',teaRef);
+    const accRef=await db.collection('accounts').doc(String(teacherId)).set(acc);
+    console.log('Account saved:',accRef);
     await loadAllData();
     closeAt();renderAt();renderAd();
     toast('✅ 已添加教师「'+name+'」，账号：'+name+' 密码：'+pass);
-  }catch(e){console.error(e);toast('保存失败：'+e.message);}
+  }catch(e){console.error('Save error:',e);toast('保存失败：'+e.message);}
 }
 async function delTeacher(teacherId){
   if(!confirm('确认删除该教师？该教师的所有上课记录将保留。'))return;
