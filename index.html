@@ -375,13 +375,15 @@ function sat(n){
   document.querySelectorAll('#adminTabs .tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const m=n.replace('a-','');
-  document.getElementById('ta-'+m).classList.add('active');
-  document.getElementById('page-'+n).classList.add('active');
+  const tabEl=document.getElementById('ta-'+m);
+  if(tabEl)tabEl.classList.add('active');
+  const pageEl=document.getElementById('page-'+n);
+  if(pageEl)pageEl.classList.add('active');
   if(n==='a-dashboard')renderAd();
   else if(n==='a-students')renderAs();
   else if(n==='a-teachers')renderAt();
-  else if(n==='a-assign')renderAssignList();
-  else if(n==='a-records')renderAr();
+  else if(n==='a-assign'){renderAssignList();initMp('ar-m');}
+  else if(n==='a-records'){renderAr();initMp('ar-m');}
 }
 
 function stt(n){
