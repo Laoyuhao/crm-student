@@ -369,24 +369,31 @@ function logout() {
 function showApp() {
   document.getElementById('loginPage').style.display = 'none';
   document.getElementById('appPage').classList.add('show');
-  document.getElementById('adminTabs').classList.add('hidden');
-  document.getElementById('teacherTabs').classList.add('hidden');
-  document.getElementById('studentTabs').classList.add('hidden');
+  
+  // 先隐藏所有标签栏
+  var adminTabs = document.getElementById('adminTabs');
+  var teacherTabs = document.getElementById('teacherTabs');
+  var studentTabs = document.getElementById('studentTabs');
+  
+  adminTabs.classList.add('hidden');
+  teacherTabs.classList.add('hidden');
+  studentTabs.classList.add('hidden');
   
   console.log('当前用户角色:', currentUser.role, '用户:', currentUser.name);
+  console.log('adminTabs hidden:', adminTabs.classList.contains('hidden'));
   
   if (currentUser.role === 'admin') {
-    document.getElementById('adminTabs').classList.remove('hidden');
+    adminTabs.classList.remove('hidden');
     document.getElementById('curRole').textContent = '👑 管理员';
-    switchTab('dashboard', document.getElementById('adminTabs').querySelector('.tab'));
+    switchTab('dashboard', adminTabs.querySelector('.tab'));
   } else if (currentUser.role === 'teacher') {
-    document.getElementById('teacherTabs').classList.remove('hidden');
+    teacherTabs.classList.remove('hidden');
     document.getElementById('curRole').textContent = '👩‍🏫 ' + currentUser.name;
-    switchTab('myStudents', document.getElementById('teacherTabs').querySelector('.tab'));
+    switchTab('myStudents', teacherTabs.querySelector('.tab'));
   } else if (currentUser.role === 'student') {
-    document.getElementById('studentTabs').classList.remove('hidden');
+    studentTabs.classList.remove('hidden');
     document.getElementById('curRole').textContent = '👨‍🎓 ' + currentUser.name;
-    switchTab('myInfo', document.getElementById('studentTabs').querySelector('.tab'));
+    switchTab('myInfo', studentTabs.querySelector('.tab'));
   }
 }
 
