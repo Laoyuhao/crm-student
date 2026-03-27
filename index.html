@@ -299,8 +299,8 @@ select.si{appearance:auto}
 
 <script>
 const K_S='c4s',K_T='c4t',K_L='c4l',K_A='c4a',K_G='c4g';
-const ld=(k,d=[])=>JSON.parse(localStorage.getItem(k)||JSON.stringify(d));
-const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const ld=(k,d=[])=>{try{return JSON.parse(localStorage.getItem(k)||'null')||d}else catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){alert('存储失败：'+e)}};
 
 function seed(){
   if(ld(K_T).length)return;
@@ -607,6 +607,8 @@ function renderAssignList(){
 
 function openAssign(){
   const stu=ld(K_S),tea=ld(K_T);
+  if(!stu.length){toast('请先添加学员');return}
+  if(!tea.length){toast('请先添加教师');return}
   const sSel=document.getElementById('asgn-stu');sSel.innerHTML='';
   stu.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.name;sSel.appendChild(o);});
   asgnRenderCourses();
