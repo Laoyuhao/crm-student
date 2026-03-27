@@ -9,120 +9,114 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif;background:#f5f6fa;color:#222;line-height:1.5}
 a{text-decoration:none;color:inherit}
 
-/* ===== 登录页 ===== */
-#loginPage{min-height:100vh;background:#0a1628;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden}
-#loginPage::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1200&q=80') center/cover no-repeat;opacity:0.15}
-#loginPage::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,0.3) 0%,rgba(10,22,40,0.95) 100%)}
-.login-content{position:relative;z-index:1;text-align:center;max-width:400px;width:100%}
-.login-logo-wrap{margin-bottom:8px}
-.login-logo-img{width:80px;height:80px;border-radius:20px;object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,.4);margin-bottom:12px}
-.login-logo{font-size:32px;font-weight:800;color:#fff;letter-spacing:2px;text-shadow:0 2px 20px rgba(37,168,101,.5)}
-.login-slogan{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:40px;letter-spacing:4px}
-.login-box{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px 28px;width:100%}
-.fi{margin-bottom:16px}
-.fi label{display:block;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:6px;font-weight:500;letter-spacing:1px}
-.fi input,.fi select{width:100%;padding:14px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;font-size:16px;color:#fff;outline:none;transition:all .3s}
-.fi input::placeholder{color:rgba(255,255,255,.3)}
-.fi input:focus{border-color:#25a865;background:rgba(37,168,101,.1)}
-.login-btn{width:100%;padding:16px;background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;margin-top:8px;letter-spacing:2px;box-shadow:0 4px 20px rgba(37,168,101,.4);transition:all .3s}
-.login-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(37,168,101,.5)}
-.login-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.login-err{color:#ff6b6b;font-size:13px;text-align:center;margin-top:12px}
+/* ===== 登录页 - 绿色玻璃拟态 ===== */
+#loginPage{min-height:100vh;background:linear-gradient(135deg,#0d4a2a 0%,#1a7a4a 50%,#25a865 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+#loginPage::before{content:'';position:absolute;inset:0;background:url('LOGO.jpg') center/cover no-repeat fixed;opacity:0.12}
+.login-content{position:relative;z-index:1;text-align:center;max-width:380px;width:100%}
+.login-logo-img{width:72px;height:72px;border-radius:18px;object-fit:cover;box-shadow:0 8px 32px rgba(0,0,0,.3);margin-bottom:12px;background:rgba(255,255,255,.2)}
+.login-title{font-size:34px;font-weight:800;color:#fff;letter-spacing:3px;text-shadow:0 2px 20px rgba(0,0,0,.3);margin-bottom:6px}
+.login-slogan{font-size:13px;color:rgba(255,255,255,.65);letter-spacing:5px;margin-bottom:40px}
+.login-box{background:rgba(255,255,255,.12);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:32px 24px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.fi{margin-bottom:14px}
+.fi label{display:block;font-size:12px;color:rgba(255,255,255,.55);margin-bottom:6px;font-weight:500;letter-spacing:1px;text-align:left}
+.fi input{width:100%;padding:14px 16px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;font-size:16px;color:#fff;outline:none;transition:all .3s;-webkit-text-fill-color:#fff}
+.fi input::placeholder{color:rgba(255,255,255,.35)}
+.fi input:focus{border-color:#fff;background:rgba(255,255,255,.18)}
+.login-btn{width:100%;padding:15px;background:linear-gradient(135deg,#fff,#e8f5e9);color:#1a7a4a;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;margin-top:6px;letter-spacing:2px;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:all .3s}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.login-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.login-err{color:#ffcdd2;font-size:13px;text-align:center;margin-top:12px}
+.loading-dots::after{content:'';animation:dots 1.5s infinite}
+@keyframes dots{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
 
 /* ===== 应用页 ===== */
 #appPage{display:none}
 #appPage.show{display:block}
-.topbar{background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.topbar{background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
 .topbar-left{display:flex;align-items:center;gap:10px}
-.topbar-logo{width:32px;height:32px;border-radius:8px;object-fit:cover}
+.topbar-logo{width:30px;height:30px;border-radius:7px;object-fit:cover;background:rgba(255,255,255,.2)}
 .topbar-title{font-size:17px;font-weight:700;letter-spacing:1px}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .topbar-role{font-size:13px;opacity:.85}
-.out-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer}
+.out-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:5px 13px;border-radius:20px;font-size:13px;cursor:pointer}
 
-.tab-bar{display:flex;background:#fff;border-bottom:2px solid #eee;position:sticky;top:60px;z-index:99}
-.tab{flex:1;min-width:0;padding:14px 4px;text-align:center;font-size:13px;font-weight:600;color:#999;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
+.tab-bar{display:flex;background:#fff;border-bottom:2px solid #e8e8e8;position:sticky;top:56px;z-index:99}
+.tab{flex:1;min-width:0;padding:13px 4px;text-align:center;font-size:13px;font-weight:600;color:#999;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
 .tab.active{color:#1a7a4a;border-bottom-color:#1a7a4a}
+.tab .badge{margin-left:4px;font-size:10px}
 
-.page{padding:16px;padding-bottom:40px}
+.page{padding:14px;padding-bottom:40px}
 .page.active{display:block}
 
-.btn{padding:10px 16px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn{padding:9px 14px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .btn-g{background:linear-gradient(135deg,#1a7a4a,#25a865);color:#fff}
 .btn-b{background:linear-gradient(135deg,#2980b9,#3498db);color:#fff}
 .btn-o{background:linear-gradient(135deg,#e67e22,#f39c12);color:#fff}
 .btn-r{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff}
 .btn-gray{background:#eee;color:#666}
 .btn-block{width:100%;justify-content:center}
-.btn-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.btn-sm{padding:8px 12px;font-size:12px}
+.btn-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.btn-sm{padding:6px 10px;font-size:12px}
 
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.sc{background:#fff;border-radius:16px;padding:16px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.sn{font-size:28px;font-weight:800;color:#1a7a4a;line-height:1.2}
-.sl{font-size:12px;color:#999;margin-top:4px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.sc{background:#fff;border-radius:14px;padding:14px 8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.sn{font-size:26px;font-weight:800;color:#1a7a4a;line-height:1.2}
+.sl{font-size:11px;color:#999;margin-top:2px}
 
-.card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:14px}
-.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.card-name{font-size:18px;font-weight:700}
+.card{background:#fff;border-radius:16px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:12px}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.card-name{font-size:17px;font-weight:700}
 .card-meta{font-size:12px;color:#999}
 .card-info{font-size:13px;color:#666;margin-bottom:10px}
 .card-actions{display:flex;gap:8px;flex-wrap:wrap}
 
 .course-list{margin-top:10px;border-top:1px solid #eee;padding-top:10px}
-.course-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#f8f9fa;border-radius:12px;margin-bottom:8px}
-.course-info{flex:1}
-.course-name{font-weight:600;font-size:14px}
-.course-teacher{font-size:12px;color:#888;margin-top:2px}
-.course-hours{text-align:right}
-.course-remaining{font-size:20px;font-weight:700;color:#1a7a4a}
-.course-total{font-size:12px;color:#999}
+.course-item{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#f5f7fa;border-radius:10px;margin-bottom:6px}
+.course-l{flex:1}
+.course-n{font-weight:600;font-size:14px}
+.course-t{font-size:11px;color:#888;margin-top:1px}
+.course-r{text-align:right}
+.course-rem{font-size:18px;font-weight:700;color:#1a7a4a}
+.course-tot{font-size:11px;color:#999}
 
-.lesson-item{padding:14px;background:#f8f9fa;border-radius:14px;margin-bottom:12px}
-.lesson-date{font-size:12px;color:#888;margin-bottom:6px;display:flex;align-items:center;gap:6px}
-.lesson-course{font-size:15px;font-weight:600;margin-bottom:8px}
-.lesson-feedback{font-size:14px;color:#444;background:#fff;padding:12px;border-radius:10px;line-height:1.6}
+.lesson-item{padding:13px;background:#f5f7fa;border-radius:12px;margin-bottom:10px}
+.lesson-d{font-size:11px;color:#888;margin-bottom:5px}
+.lesson-c{font-size:15px;font-weight:600;margin-bottom:6px}
+.lesson-f{font-size:14px;color:#444;background:#fff;padding:10px;border-radius:8px;line-height:1.6}
 
-.tag{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600}
+.tag{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600}
 .tag-g{background:#d4edda;color:#155724}
 .tag-b{background:#cce5ff;color:#004085}
 .tag-o{background:#fff3cd;color:#856404}
 .tag-r{background:#f8d7da;color:#721c24}
 
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:flex-end;justify-content:center}
-.sheet{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:640px;max-height:94vh;overflow-y:auto;padding:24px}
-.sh{width:40px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 20px}
-.sheet-title{font-size:20px;font-weight:700;margin-bottom:20px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:13px;color:#888;margin-bottom:6px;font-weight:500}
-.si{width:100%;padding:13px 16px;border:2px solid #e8e8e8;border-radius:12px;font-size:16px;outline:none;background:#fff;transition:border-color .2s}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:640px;max-height:94vh;overflow-y:auto;padding:22px}
+.sh{width:36px;height:4px;background:#ccc;border-radius:2px;margin:0 auto 18px;cursor:pointer}
+.sheet-title{font-size:19px;font-weight:700;margin-bottom:18px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;color:#888;margin-bottom:5px;font-weight:500}
+.si{width:100%;padding:13px 14px;border:1.5px solid #e0e0e0;border-radius:12px;font-size:16px;outline:none;background:#fff;transition:border-color .2s}
 .si:focus{border-color:#25a865}
-.ta{width:100%;padding:13px 16px;border:2px solid #e8e8e8;border-radius:12px;font-size:15px;outline:none;background:#fff;resize:none;line-height:1.5}
+.ta{width:100%;padding:13px 14px;border:1.5px solid #e0e0e0;border-radius:12px;font-size:15px;outline:none;resize:none;line-height:1.5}
 
-.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.8);color:#fff;padding:14px 28px;border-radius:24px;font-size:15px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);color:#fff;padding:13px 26px;border-radius:24px;font-size:14px;z-index:999;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
-.empty{text-align:center;padding:50px 20px;color:#bbb}
-.empty-icon{font-size:48px;margin-bottom:12px}
-.empty-text{font-size:15px}
+.empty{text-align:center;padding:48px 20px;color:#ccc}
+.empty-icon{font-size:44px;margin-bottom:10px}
+.empty-text{font-size:14px}
 
-.sync-box{background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-top:8px}
-.sync-box h3{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.sync-box p{font-size:13px;color:#888;margin-bottom:14px}
-.sync-box textarea{width:100%;height:70px;padding:10px;border:1px solid #ddd;border-radius:10px;font-size:12px;resize:none;margin-bottom:10px;background:#fafafa}
+.sync-box{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-top:6px}
+.sync-box h3{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sync-box p{font-size:12px;color:#888;margin-bottom:12px}
+.sync-box textarea{width:100%;height:65px;padding:9px;border:1px solid #ddd;border-radius:10px;font-size:12px;resize:none;margin-bottom:9px;background:#fafafa}
 
-.section-title{font-size:15px;font-weight:600;color:#333;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.section-title::after{content:'';flex:1;height:1px;background:#eee}
-
-.badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;background:#ff4757;color:#fff;border-radius:10px;font-size:11px;font-weight:700;padding:0 6px}
+.section-title{font-size:14px;font-weight:600;color:#333;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #eee;display:flex;align-items:center;gap:6px}
 
 .hidden{display:none!important}
 
-/* 小屏幕适配 */
 @media(max-width:380px){
-  .stats-row{grid-template-columns:repeat(3,1fr);gap:8px}
-  .sc{padding:12px 6px}
-  .sn{font-size:22px}
-  .topbar{padding:12px 14px}
+  .stats-row{grid-template-columns:repeat(3,1fr);gap:7px}
   .topbar-title{font-size:15px}
 }
 </style>
@@ -133,14 +127,12 @@ a{text-decoration:none;color:inherit}
 <!-- ===== 登录页 ===== -->
 <div id="loginPage">
   <div class="login-content">
-    <div class="login-logo-wrap">
-      <img class="login-logo-img" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=200&q=80" alt="logo" onerror="this.style.display='none'">
-      <div class="login-logo">艺风粤播</div>
-      <div class="login-slogan">· 课时管理系统 ·</div>
-    </div>
+    <img class="login-logo-img" id="loginLogo" src="LOGO.jpg" alt="logo">
+    <div class="login-title">艺风粤播</div>
+    <div class="login-slogan">· 课时管理系统 ·</div>
     <div class="login-box">
-      <div class="fi"><label>账 号</label><input type="text" id="lu" placeholder="请输入账号" autocomplete="off"></div>
-      <div class="fi"><label>密 码</label><input type="password" id="lp" placeholder="请输入密码"></div>
+      <div class="fi"><label>账 号</label><input type="text" id="lu" placeholder="请输入账号" autocomplete="off" value="admin"></div>
+      <div class="fi"><label>密 码</label><input type="password" id="lp" placeholder="请输入密码" value="admin123"></div>
       <button class="login-btn" id="loginBtn" onclick="doLogin()">登 录</button>
       <div class="login-err" id="loginErr"></div>
     </div>
@@ -151,36 +143,30 @@ a{text-decoration:none;color:inherit}
 <div id="appPage">
   <div class="topbar">
     <div class="topbar-left">
-      <img class="topbar-logo" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=100&q=80" alt="logo" onerror="this.style.display='none'">
+      <img class="topbar-logo" id="appLogo" src="LOGO.jpg" alt="logo">
       <span class="topbar-title">艺风粤播</span>
     </div>
     <div class="topbar-right">
-      <span class="topbar-role" id="curRole"></span>
+      <span id="curRole"></span>
       <button class="out-btn" onclick="doLogout()">退出</button>
     </div>
   </div>
   
-  <!-- 管理员标签 -->
   <div id="adminTabs" class="tab-bar hidden">
-    <div class="tab active" onclick="showPage('dashboard',this)">总览</div>
-    <div class="tab" onclick="showPage('students',this)">学员管理</div>
-    <div class="tab" onclick="showPage('teachers',this)">教师管理</div>
-    <div class="tab" onclick="showPage('lessons',this)">上课记录</div>
+    <div class="tab active" onclick="showTab('dashboard',this)">总览</div>
+    <div class="tab" onclick="showTab('students',this)">学员管理</div>
+    <div class="tab" onclick="showTab('teachers',this)">教师管理</div>
+    <div class="tab" onclick="showTab('lessons',this)">上课记录</div>
   </div>
-
-  <!-- 教师标签 -->
   <div id="teacherTabs" class="tab-bar hidden">
-    <div class="tab active" onclick="showPage('myStudents',this)">我的学员</div>
-    <div class="tab" onclick="showPage('myLessons',this)">上课记录</div>
+    <div class="tab active" onclick="showTab('myStudents',this)">我的学员</div>
+    <div class="tab" onclick="showTab('myLessons',this)">上课记录</div>
   </div>
-
-  <!-- 学生标签 -->
   <div id="studentTabs" class="tab-bar hidden">
-    <div class="tab active" onclick="showPage('myCourses',this)">我的课程</div>
-    <div class="tab" onclick="showPage('myFeedbacks',this)">课堂反馈</div>
+    <div class="tab active" onclick="showTab('myCourses',this)">我的课程</div>
+    <div class="tab" onclick="showTab('myFeedbacks',this)">课堂反馈</div>
   </div>
 
-  <!-- ===== 总览页 ===== -->
   <div class="page active" id="page-dashboard">
     <div class="stats-row">
       <div class="sc"><div class="sn" id="st-stu">0</div><div class="sl">学员总数</div></div>
@@ -189,168 +175,133 @@ a{text-decoration:none;color:inherit}
     </div>
     <div class="section-title">快捷操作</div>
     <div class="btn-row">
-      <button class="btn btn-g" onclick="openModal('modal-student')">+ 新增学员</button>
-      <button class="btn btn-b" onclick="openModal('modal-teacher')">+ 新增教师</button>
+      <button class="btn btn-g" onclick="openM('modal-student')">+ 新增学员</button>
+      <button class="btn btn-b" onclick="openM('modal-teacher')">+ 新增教师</button>
     </div>
     <div class="sync-box">
       <h3>📤 数据同步</h3>
-      <p>换手机时，导出数据到新手机导入即可同步所有信息</p>
-      <button class="btn btn-g btn-block" onclick="exportData()">📋 导出数据</button>
+      <p>换手机时导出数据，在新手机导入即可同步</p>
+      <button class="btn btn-g btn-block" onclick="exportData()">导出数据</button>
       <textarea id="syncData" placeholder="导入时粘贴数据到此处..."></textarea>
-      <button class="btn btn-b btn-block" onclick="importData()">📥 导入数据</button>
+      <button class="btn btn-b btn-block" onclick="importData()">导入数据</button>
     </div>
   </div>
 
-  <!-- ===== 学员管理 ===== -->
-  <div class="page" id="page-students">
-    <div class="btn-row">
-      <button class="btn btn-g" onclick="openModal('modal-student')">+ 新增学员</button>
-    </div>
-    <div id="students-list"></div>
-  </div>
-
-  <!-- ===== 教师管理 ===== -->
-  <div class="page" id="page-teachers">
-    <div class="btn-row">
-      <button class="btn btn-b" onclick="openModal('modal-teacher')">+ 新增教师</button>
-    </div>
-    <div id="teachers-list"></div>
-  </div>
-
-  <!-- ===== 全部上课记录 ===== -->
-  <div class="page" id="page-lessons">
-    <div id="all-lessons-list"></div>
-  </div>
-
-  <!-- ===== 教师：我的学员 ===== -->
-  <div class="page" id="page-myStudents">
-    <div id="teacher-students-list"></div>
-  </div>
-
-  <!-- ===== 教师：上课记录 ===== -->
-  <div class="page" id="page-myLessons">
-    <div id="teacher-lessons-list"></div>
-  </div>
-
-  <!-- ===== 学生：我的课程 ===== -->
-  <div class="page" id="page-myCourses">
-    <div id="student-courses-list"></div>
-  </div>
-
-  <!-- ===== 学生：课堂反馈 ===== -->
-  <div class="page" id="page-myFeedbacks">
-    <div id="student-feedbacks-list"></div>
-  </div>
+  <div class="page" id="page-students"><div id="students-list"></div></div>
+  <div class="page" id="page-teachers"><div id="teachers-list"></div></div>
+  <div class="page" id="page-lessons"><div id="all-lessons-list"></div></div>
+  <div class="page" id="page-myStudents"><div id="teacher-students-list"></div></div>
+  <div class="page" id="page-myLessons"><div id="teacher-lessons-list"></div></div>
+  <div class="page" id="page-myCourses"><div id="student-courses-list"></div></div>
+  <div class="page" id="page-myFeedbacks"><div id="student-feedbacks-list"></div></div>
 </div>
 
 <!-- ===== 弹窗 ===== -->
-
-<!-- 新增学员 -->
-<div class="overlay hidden" id="modal-student" onclick="if(event.target.id==='modal-student')closeModal('modal-student')">
+<div class="overlay hidden" id="modal-student" onclick="if(event.target.id==='modal-student')closeM('modal-student')">
 <div class="sheet" onclick="event.stopPropagation()">
-  <div class="sh" onclick="closeModal('modal-student')"></div>
+  <div class="sh" onclick="closeM('modal-student')"></div>
   <div class="sheet-title">新增学员</div>
   <div class="form-group"><label>学员姓名</label><input class="si" id="inp-s-name" placeholder="请输入学员姓名"></div>
-  <div class="form-group"><label>登录密码 <span style="color:#aaa;font-weight:400">(留空默认为123456)</span></label><input class="si" id="inp-s-pass" type="password" placeholder="请输入登录密码"></div>
-  <button class="btn btn-g btn-block" onclick="saveStudent()">✅ 保存学员</button>
-  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeModal('modal-student')">取消</button>
+  <div class="form-group"><label>登录密码 <span style="color:#bbb;font-weight:400">(留空默认为123456)</span></label><input class="si" id="inp-s-pass" type="password" placeholder="请输入登录密码"></div>
+  <button class="btn btn-g btn-block" onclick="saveStudent()">保存学员</button>
+  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeM('modal-student')">取消</button>
 </div></div>
 
-<!-- 新增教师 -->
-<div class="overlay hidden" id="modal-teacher" onclick="if(event.target.id==='modal-teacher')closeModal('modal-teacher')">
+<div class="overlay hidden" id="modal-teacher" onclick="if(event.target.id==='modal-teacher')closeM('modal-teacher')">
 <div class="sheet" onclick="event.stopPropagation()">
-  <div class="sh" onclick="closeModal('modal-teacher')"></div>
+  <div class="sh" onclick="closeM('modal-teacher')"></div>
   <div class="sheet-title">新增教师</div>
   <div class="form-group"><label>教师姓名</label><input class="si" id="inp-t-name" placeholder="如：王老师"></div>
   <div class="form-group"><label>登录密码</label><input class="si" id="inp-t-pass" type="password" placeholder="请设置登录密码"></div>
-  <button class="btn btn-b btn-block" onclick="saveTeacher()">✅ 保存教师</button>
-  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeModal('modal-teacher')">取消</button>
+  <button class="btn btn-b btn-block" onclick="saveTeacher()">保存教师</button>
+  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeM('modal-teacher')">取消</button>
 </div></div>
 
-<!-- 添加课程包 -->
-<div class="overlay hidden" id="modal-addCourse" onclick="if(event.target.id==='modal-addCourse')closeModal('modal-addCourse')">
+<div class="overlay hidden" id="modal-addCourse" onclick="if(event.target.id==='modal-addCourse')closeM('modal-addCourse')">
 <div class="sheet" onclick="event.stopPropagation()">
-  <div class="sh" onclick="closeModal('modal-addCourse')"></div>
+  <div class="sh" onclick="closeM('modal-addCourse')"></div>
   <div class="sheet-title">添加课程包</div>
-  <input type="hidden" id="inp-ac-studentId">
-  <div style="background:#f0fdf4;padding:12px 14px;border-radius:10px;margin-bottom:16px;font-size:14px;color:#155724" id="inp-ac-studentName"></div>
+  <input type="hidden" id="inp-ac-sid">
+  <div class="form-group" style="background:#e8f5e9;padding:12px;border-radius:10px;margin-bottom:14px;font-size:14px;color:#155724" id="inp-ac-sname"></div>
   <div class="form-group"><label>课程名称</label><input class="si" id="inp-ac-name" placeholder="如：粤语播音基础班"></div>
   <div class="form-group"><label>课时数量</label><input class="si" id="inp-ac-hours" type="number" placeholder="10" min="1"></div>
-  <div class="form-group"><label>分配教师 <span style="color:#aaa;font-weight:400">(可选)</span></label>
+  <div class="form-group"><label>分配教师 <span style="color:#bbb;font-weight:400">(可选)</span></label>
     <select class="si" id="inp-ac-teacher"><option value="">选择教师（可选）</option></select>
   </div>
-  <button class="btn btn-g btn-block" onclick="saveCourse()">✅ 添加课程</button>
-  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeModal('modal-addCourse')">取消</button>
+  <button class="btn btn-g btn-block" onclick="saveCourse()">添加课程</button>
+  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeM('modal-addCourse')">取消</button>
 </div></div>
 
-<!-- 教师销课 -->
-<div class="overlay hidden" id="modal-addLesson" onclick="if(event.target.id==='modal-addLesson')closeModal('modal-addLesson')">
+<div class="overlay hidden" id="modal-addLesson" onclick="if(event.target.id==='modal-addLesson')closeM('modal-addLesson')">
 <div class="sheet" onclick="event.stopPropagation()">
-  <div class="sh" onclick="closeModal('modal-addLesson')"></div>
+  <div class="sh" onclick="closeM('modal-addLesson')"></div>
   <div class="sheet-title">记录上课</div>
-  <input type="hidden" id="inp-al-studentId">
-  <input type="hidden" id="inp-al-courseIdx">
-  <div style="background:#e8f4fd;padding:12px 14px;border-radius:10px;margin-bottom:16px">
-    <div style="font-weight:700;font-size:16px" id="inp-al-studentName2"></div>
-    <div style="font-size:14px;color:#666;margin-top:4px" id="inp-al-courseName2"></div>
+  <input type="hidden" id="inp-al-sid">
+  <input type="hidden" id="inp-al-cidx">
+  <div class="form-group" style="background:#e3f2fd;padding:12px;border-radius:10px;margin-bottom:14px">
+    <div style="font-weight:700;font-size:16px" id="inp-al-sname2"></div>
+    <div style="font-size:13px;color:#666;margin-top:3px" id="inp-al-cname2"></div>
   </div>
   <div class="form-group"><label>上课时间</label><input class="si" id="inp-al-date" type="datetime-local"></div>
-  <div class="form-group"><label>课堂反馈 <span style="color:#aaa;font-weight:400">(必填)</span></label><textarea class="ta" id="inp-al-feedback" rows="4" placeholder="记录本节课的学习内容、学员表现、进步与不足、作业布置等..."></textarea></div>
-  <button class="btn btn-g btn-block" onclick="saveLesson()">✅ 确认销课 1 课时</button>
-  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeModal('modal-addLesson')">取消</button>
+  <div class="form-group"><label>课堂反馈 <span style="color:#e74c3c;font-weight:400">(必填)</span></label><textarea class="ta" id="inp-al-feedback" rows="4" placeholder="记录本节课的学习内容、学员表现、进步与不足、作业布置等..."></textarea></div>
+  <button class="btn btn-g btn-block" onclick="saveLesson()">确认销课 1 课时</button>
+  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeM('modal-addLesson')">取消</button>
 </div></div>
 
-<!-- 编辑学员 -->
-<div class="overlay hidden" id="modal-editStudent" onclick="if(event.target.id==='modal-editStudent')closeModal('modal-editStudent')">
+<div class="overlay hidden" id="modal-editStudent" onclick="if(event.target.id==='modal-editStudent')closeM('modal-editStudent')">
 <div class="sheet" onclick="event.stopPropagation()">
-  <div class="sh" onclick="closeModal('modal-editStudent')"></div>
+  <div class="sh" onclick="closeM('modal-editStudent')"></div>
   <div class="sheet-title">编辑学员</div>
   <input type="hidden" id="inp-es-id">
   <div class="form-group"><label>学员姓名</label><input class="si" id="inp-es-name"></div>
-  <div class="form-group"><label>登录密码 <span style="color:#aaa;font-weight:400">(留空不变)</span></label><input class="si" id="inp-es-pass" type="password" placeholder="不修改请留空"></div>
-  <div id="inp-es-courses-list"></div>
-  <button class="btn btn-g btn-block" onclick="updateStudent()">✅ 保存修改</button>
-  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeModal('modal-editStudent')">取消</button>
+  <div class="form-group"><label>登录密码 <span style="color:#bbb;font-weight:400">(留空不变)</span></label><input class="si" id="inp-es-pass" type="password" placeholder="不修改请留空"></div>
+  <div id="inp-es-courses"></div>
+  <button class="btn btn-g btn-block" onclick="updateStudent()">保存修改</button>
+  <button class="btn btn-gray btn-block" style="margin-top:8px" onclick="closeM('modal-editStudent')">取消</button>
 </div></div>
 
 <script>
+// ===== 配置 =====
+var STORE_KEY = 'yf_crm_v5';
+
 // ===== 本地存储 =====
-var STORAGE_KEY = 'yf_crm_v4';
-
-function getLocalData() {
-  try { var d = localStorage.getItem(STORAGE_KEY); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+function getData() {
+  try {
+    var d = localStorage.getItem(STORE_KEY);
+    return d ? JSON.parse(d) : null;
+  } catch(e) { return null; }
+}
+function saveData(data) {
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
 }
 
-function setLocalData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+// ===== 默认数据 =====
+// 全局变量
+var DB = null;
+var curUser = null;
+var busy = false;
 
-// ===== 数据 =====
-var allData = null;
-var currentUser = null;
-var isLoading = false;
-
-// ===== UI =====
+// ===== UI 工具 =====
 function toast(msg) {
   var t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(function() { t.classList.remove('show'); }, 2200);
 }
-
-function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-function formatDate(ds) {
+function openM(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeM(id) { document.getElementById(id).classList.add('hidden'); }
+function esc(s) { return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; }
+function dt(ds) {
   if (!ds) return '';
   var d = new Date(ds);
-  var pad = function(n) { return n < 10 ? '0' + n : n; };
-  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  var p = function(n) { return n < 10 ? '0' + n : n; };
+  return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
 }
 
-// ===== 初始化数据 =====
-function createDefaultData() {
-  return {
+// ===== 数据初始化 =====
+// 强制重置数据（解决旧版本兼容问题）
+function resetDB() {
+  DB = {
     students: {},
     teachers: {},
     accounts: {
@@ -358,108 +309,102 @@ function createDefaultData() {
     },
     lessons: []
   };
+  saveData(DB);
 }
 
-function ensureData() {
-  if (!allData) {
-    allData = getLocalData();
-    if (!allData || !allData.accounts) {
-      allData = createDefaultData();
-      setLocalData(allData);
-    }
-  }
-}
+// 首次加载时重置数据
+resetDB();
 
 // ===== 登录 =====
 document.getElementById('lp').addEventListener('keypress', function(e) { if (e.key === 'Enter') doLogin(); });
 
 function doLogin() {
-  if (isLoading) return;
+  if (busy) return;
   var u = document.getElementById('lu').value.trim();
   var p = document.getElementById('lp').value;
-  var err = document.getElementById('loginErr');
-  err.textContent = '';
+  var errEl = document.getElementById('loginErr');
+  errEl.textContent = '';
   
-  if (!u || !p) { err.textContent = '请输入账号和密码'; return; }
+  if (!u) { errEl.textContent = '请输入账号'; return; }
+  if (!p) { errEl.textContent = '请输入密码'; return; }
   
   var btn = document.getElementById('loginBtn');
-  btn.textContent = '加载中...';
+  btn.textContent = '登录中...';
   btn.disabled = true;
-  isLoading = true;
+  busy = true;
   
+  // 模拟短暂延迟，让UI更新
   setTimeout(function() {
-    ensureData();
-    
     var acc = null;
-    var accounts = allData.accounts || {};
-    for (var k in accounts) {
-      if (accounts[k].username === u && accounts[k].password === p) { acc = accounts[k]; break; }
+    for (var k in DB.accounts) {
+      if (DB.accounts[k].username === u && DB.accounts[k].password === p) {
+        acc = DB.accounts[k];
+        break;
+      }
     }
     
     if (!acc) {
-      err.textContent = '账号或密码错误';
+      errEl.textContent = '账号或密码错误';
       btn.textContent = '登 录';
       btn.disabled = false;
-      isLoading = false;
+      busy = false;
       return;
     }
     
-    currentUser = acc;
-    sessionStorage.setItem('crm_user', JSON.stringify(acc));
+    curUser = acc;
+    sessionStorage.setItem('crm_session', JSON.stringify(acc));
     showApp();
     
     btn.textContent = '登 录';
     btn.disabled = false;
-    isLoading = false;
-  }, 300);
+    busy = false;
+  }, 200);
 }
 
 function doLogout() {
-  currentUser = null;
-  sessionStorage.removeItem('crm_user');
+  curUser = null;
+  sessionStorage.removeItem('crm_session');
   document.getElementById('appPage').classList.remove('show');
   document.getElementById('loginPage').style.display = 'flex';
-  document.getElementById('lu').value = '';
+  document.getElementById('lu').value = 'admin';
   document.getElementById('lp').value = '';
 }
 
-// ===== 页面切换 =====
+// ===== 显示应用 =====
 function showApp() {
   document.getElementById('loginPage').style.display = 'none';
   document.getElementById('appPage').classList.add('show');
   
-  var adminTabs = document.getElementById('adminTabs');
-  var teacherTabs = document.getElementById('teacherTabs');
-  var studentTabs = document.getElementById('studentTabs');
-  adminTabs.classList.add('hidden');
-  teacherTabs.classList.add('hidden');
-  studentTabs.classList.add('hidden');
+  // 隐藏所有标签栏
+  document.getElementById('adminTabs').classList.add('hidden');
+  document.getElementById('teacherTabs').classList.add('hidden');
+  document.getElementById('studentTabs').classList.add('hidden');
   
-  if (currentUser.role === 'admin') {
-    adminTabs.classList.remove('hidden');
+  if (curUser.role === 'admin') {
+    document.getElementById('adminTabs').classList.remove('hidden');
     document.getElementById('curRole').textContent = '👑 管理员';
-    showPage('dashboard', adminTabs.querySelector('.tab'));
-  } else if (currentUser.role === 'teacher') {
-    teacherTabs.classList.remove('hidden');
-    document.getElementById('curRole').textContent = '👩‍🏫 ' + currentUser.name;
-    showPage('myStudents', teacherTabs.querySelector('.tab'));
-  } else if (currentUser.role === 'student') {
-    studentTabs.classList.remove('hidden');
-    document.getElementById('curRole').textContent = '👨‍🎓 ' + currentUser.name;
-    showPage('myCourses', studentTabs.querySelector('.tab'));
+    showTab('dashboard', document.getElementById('adminTabs').querySelector('.tab'));
+  } else if (curUser.role === 'teacher') {
+    document.getElementById('teacherTabs').classList.remove('hidden');
+    document.getElementById('curRole').textContent = '👩‍🏫 ' + esc(curUser.name);
+    showTab('myStudents', document.getElementById('teacherTabs').querySelector('.tab'));
+  } else if (curUser.role === 'student') {
+    document.getElementById('studentTabs').classList.remove('hidden');
+    document.getElementById('curRole').textContent = '👨‍🎓 ' + esc(curUser.name);
+    showTab('myCourses', document.getElementById('studentTabs').querySelector('.tab'));
   }
 }
 
-function showPage(page, el) {
+// ===== 页面切换 =====
+function showTab(page, el) {
   document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   if (el) el.classList.add('active');
   var p = document.getElementById('page-' + page);
   if (p) p.classList.add('active');
   
-  ensureData();
   switch(page) {
-    case 'dashboard': renderDashboard(); break;
+    case 'dashboard': renderDash(); break;
     case 'students': renderStudents(); break;
     case 'teachers': renderTeachers(); break;
     case 'lessons': renderAllLessons(); break;
@@ -471,142 +416,92 @@ function showPage(page, el) {
 }
 
 // ===== 管理员：总览 =====
-function renderDashboard() {
-  var stuCount = Object.keys(allData.students || {}).length;
-  var teaCount = Object.keys(allData.teachers || {}).length;
-  var lesCount = (allData.lessons || []).length;
-  document.getElementById('st-stu').textContent = stuCount;
-  document.getElementById('st-tea').textContent = teaCount;
-  document.getElementById('st-lesson').textContent = lesCount;
+function renderDash() {
+  document.getElementById('st-stu').textContent = Object.keys(DB.students).length;
+  document.getElementById('st-tea').textContent = Object.keys(DB.teachers).length;
+  document.getElementById('st-lesson').textContent = DB.lessons.length;
 }
 
 // ===== 管理员：学员列表 =====
 function renderStudents() {
   var list = document.getElementById('students-list');
-  var students = Object.values(allData.students || {});
+  var list2 = Object.values(DB.students);
   
-  if (students.length === 0) {
+  if (list2.length === 0) {
     list.innerHTML = '<div class="empty"><div class="empty-icon">👨‍🎓</div><div class="empty-text">暂无学员，点击上方按钮添加</div></div>';
     return;
   }
   
-  list.innerHTML = students.map(function(s) {
-    var courses = s.courses || [];
-    var totalRem = courses.reduce(function(a, c) { return a + (c.remaining || 0); }, 0);
-    var totalAll = courses.reduce(function(a, c) { return a + (c.total || 0); }, 0);
+  list.innerHTML = list2.map(function(s) {
+    var cs = s.courses || [];
+    var totalRem = cs.reduce(function(a, c) { return a + (c.remaining||0); }, 0);
+    var totalAll = cs.reduce(function(a, c) { return a + (c.total||0); }, 0);
     
-    var coursesHtml = courses.length > 0 ? courses.map(function(c, i) {
-      var teacher = c.teacherId ? (allData.teachers[c.teacherId] || {}) : null;
+    var csHtml = cs.length > 0 ? cs.map(function(c, i) {
+      var t = c.teacherId ? DB.teachers[c.teacherId] : null;
       return '<div class="course-item">' +
-        '<div class="course-info">' +
-          '<div class="course-name">' + escHtml(c.name) + '</div>' +
-          '<div class="course-teacher">教师：' + (teacher ? escHtml(teacher.name) : '未分配') + '</div>' +
-        '</div>' +
-        '<div class="course-hours">' +
-          '<span class="course-remaining">' + c.remaining + '</span>' +
-          '<span class="course-total">/' + c.total + ' 课时</span>' +
-        '</div>' +
+        '<div class="course-l"><div class="course-n">' + esc(c.name) + '</div><div class="course-t">教师：' + (t ? esc(t.name) : '未分配') + '</div></div>' +
+        '<div class="course-r"><span class="course-rem">' + c.remaining + '</span><span class="course-tot">/' + c.total + '</span></div>' +
       '</div>';
-    }).join('') : '<div style="font-size:13px;color:#bbb;padding:8px 0">暂无课程包</div>';
+    }).join('') : '<div style="font-size:12px;color:#bbb;padding:6px 0">暂无课程包</div>';
     
     return '<div class="card">' +
-      '<div class="card-header">' +
-        '<span class="card-name">' + escHtml(s.name) + '</span>' +
+      '<div class="card-hdr">' +
+        '<span class="card-name">' + esc(s.name) + '</span>' +
         '<span class="tag ' + (totalRem > 0 ? 'tag-g' : 'tag-o') + '">' + totalRem + '/' + totalAll + ' 课时</span>' +
       '</div>' +
       '<div class="card-actions">' +
         '<button class="btn btn-g btn-sm" onclick="openAddCourse(\'' + s.id + '\')">+ 添加课程</button>' +
         '<button class="btn btn-b btn-sm" onclick="openEditStudent(\'' + s.id + '\')">编辑</button>' +
       '</div>' +
-      '<div class="course-list">' + coursesHtml + '</div>' +
+      '<div class="course-list">' + csHtml + '</div>' +
     '</div>';
   }).join('');
 }
-
-function escHtml(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ===== 管理员：教师列表 =====
 function renderTeachers() {
   var list = document.getElementById('teachers-list');
-  var teachers = Object.values(allData.teachers || {});
+  var list2 = Object.values(DB.teachers);
   
-  if (teachers.length === 0) {
+  if (list2.length === 0) {
     list.innerHTML = '<div class="empty"><div class="empty-icon">👩‍🏫</div><div class="empty-text">暂无教师，点击上方按钮添加</div></div>';
     return;
   }
   
-  list.innerHTML = teachers.map(function(t) {
-    var stuCount = Object.values(allData.students || {}).filter(function(s) {
+  list.innerHTML = list2.map(function(t) {
+    var sc = Object.values(DB.students).filter(function(s) {
       return s.courses && s.courses.some(function(c) { return c.teacherId === t.id; });
     }).length;
-    var lesCount = (allData.lessons || []).filter(function(l) { return l.teacherId === t.id; }).length;
-    
+    var lc = DB.lessons.filter(function(l) { return l.teacherId === t.id; }).length;
     return '<div class="card">' +
-      '<div class="card-header">' +
-        '<span class="card-name">' + escHtml(t.name) + '</span>' +
-        '<span class="tag tag-b">' + stuCount + ' 位学员</span>' +
+      '<div class="card-hdr">' +
+        '<span class="card-name">' + esc(t.name) + '</span>' +
+        '<span class="tag tag-b">' + sc + ' 位学员</span>' +
       '</div>' +
-      '<div class="card-info">已上课 ' + lesCount + ' 节 · 账号：' + escHtml(t.name) + '</div>'    '</div>' +
-    '<div class="card-actions">' +
-      '<button class="btn btn-o btn-sm" onclick="openTeacherStudents(\'' + t.id + '\')">查看学员</button>' +
-    '</div>' +
+      '<div class="card-info">已上课 ' + lc + ' 节</div>' +
     '</div>';
   }).join('');
-}
-
-// 打开教师学员弹窗
-function openTeacherStudents(teacherId) {
-  var teacher = allData.teachers[teacherId];
-  var myStudents = [];
-  Object.values(allData.students || {}).forEach(function(s) {
-    if (s.courses) {
-      s.courses.forEach(function(c) {
-        if (c.teacherId === teacherId) myStudents.push({ student: s, course: c });
-      });
-    }
-  });
-  
-  var html = '<div style="padding:20px">' +
-    '<h3 style="margin-bottom:16px">' + escHtml(teacher.name) + ' 的学员</h3>';
-  
-  if (myStudents.length === 0) {
-    html += '<div style="text-align:center;padding:30px;color:#bbb">暂无分配的学员</div>';
-  } else {
-    html += myStudents.map(function(item) {
-      return '<div class="card">' +
-        '<div class="card-header">' +
-          '<span class="card-name">' + escHtml(item.student.name) + '</span>' +
-          '<span class="tag tag-g">' + item.course.remaining + '/' + item.course.total + '</span>' +
-        '</div>' +
-        '<div class="card-info">' + escHtml(item.course.name) + '</div>' +
-      '</div>';
-    }).join('');
-  }
-  
-  html += '<button class="btn btn-gray btn-block" style="margin-top:16px" onclick="closeModal(\'modal-teacher\')">关闭</button></div>';
-  
-  document.getElementById('modal-teacher').innerHTML = html;
-  document.getElementById('modal-teacher').classList.remove('hidden');
 }
 
 // ===== 管理员：全部上课记录 =====
 function renderAllLessons() {
   var list = document.getElementById('all-lessons-list');
-  var lessons = (allData.lessons || []).sort(function(a, b) { return new Date(b.lessonDate) - new Date(a.lessonDate); });
+  var ls = DB.lessons.slice().sort(function(a,b) { return new Date(b.lessonDate) - new Date(a.lessonDate); });
   
-  if (lessons.length === 0) {
+  if (ls.length === 0) {
     list.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">暂无上课记录</div></div>';
     return;
   }
   
-  list.innerHTML = lessons.map(function(l) {
-    var student = allData.students[l.studentId] || {};
-    var teacher = allData.teachers[l.teacherId] || {};
+  list.innerHTML = ls.map(function(l) {
+    var st = DB.students[l.studentId] || {};
+    var tc = DB.teachers[l.teacherId] || {};
     return '<div class="lesson-item">' +
-      '<div class="lesson-date">📅 ' + formatDate(l.lessonDate) + '</div>' +
-      '<div class="lesson-course">' + escHtml(student.name || '未知') + ' · ' + escHtml(l.courseName || '') + '</div>' +
-      '<div style="font-size:12px;color:#888;margin-bottom:8px">👩‍🏫 ' + escHtml(teacher.name || '') + '</div>' +
-      '<div class="lesson-feedback">' + (l.feedback || '无反馈') + '</div>' +
+      '<div class="lesson-d">📅 ' + dt(l.lessonDate) + '</div>' +
+      '<div class="lesson-c">' + esc(st.name||'') + ' · ' + esc(l.courseName||'') + '</div>' +
+      '<div style="font-size:12px;color:#888;margin-bottom:7px">👩‍🏫 ' + esc(tc.name||'') + '</div>' +
+      '<div class="lesson-f">' + esc(l.feedback||'无反馈') + '</div>' +
     '</div>';
   }).join('');
 }
@@ -614,175 +509,157 @@ function renderAllLessons() {
 // ===== 管理员操作 =====
 function saveStudent() {
   var name = document.getElementById('inp-s-name').value.trim();
-  var password = document.getElementById('inp-s-pass').value || '123456';
-  
+  var pass = document.getElementById('inp-s-pass').value || '123456';
   if (!name) { toast('请输入学员姓名'); return; }
   
   var id = 's' + Date.now();
-  allData.students[id] = { id: id, name: name, courses: [], createdAt: new Date().toISOString() };
-  allData.accounts[id] = { id: id, username: name, password: password, name: name, role: 'student' };
+  DB.students[id] = { id: id, name: name, courses: [], createdAt: new Date().toISOString() };
+  DB.accounts[id] = { id: id, username: name, password: pass, name: name, role: 'student' };
+  saveData(DB);
   
-  setLocalData(allData);
-  closeModal('modal-student');
+  closeM('modal-student');
   toast('已添加学员：' + name);
-  document.getElementById('inp-s-name').value = '';
+  document.getElementById('  'inp-s-name').value = '';
   document.getElementById('inp-s-pass').value = '';
   renderStudents();
-  renderDashboard();
+  renderDash();
 }
 
 function saveTeacher() {
   var name = document.getElementById('inp-t-name').value.trim();
-  var password = document.getElementById('inp-t-pass').value;
-  
+  var pass = document.getElementById('inp-t-pass').value;
   if (!name) { toast('请输入教师姓名'); return; }
-  if (!password) { toast('请输入登录密码'); return; }
+  if (!pass) { toast('请输入登录密码'); return; }
   
   var id = 't' + Date.now();
-  allData.teachers[id] = { id: id, name: name, createdAt: new Date().toISOString() };
-  allData.accounts[id] = { id: id, username: name, password: password, name: name, role: 'teacher' };
+  DB.teachers[id] = { id: id, name: name, createdAt: new Date().toISOString() };
+  DB.accounts[id] = { id: id, username: name, password: pass, name: name, role: 'teacher' };
+  saveData(DB);
   
-  setLocalData(allData);
-  closeModal('modal-teacher');
+  closeM('modal-teacher');
   toast('已添加教师：' + name);
   document.getElementById('inp-t-name').value = '';
   document.getElementById('inp-t-pass').value = '';
   renderTeachers();
-  renderDashboard();
+  renderDash();
 }
 
-function openAddCourse(studentId) {
-  document.getElementById('inp-ac-studentId').value = studentId;
+function openAddCourse(sid) {
+  document.getElementById('inp-ac-sid').value = sid;
   document.getElementById('inp-ac-name').value = '';
   document.getElementById('inp-ac-hours').value = '';
+  document.getElementById('inp-ac-sname').textContent = '学员：' + DB.students[sid].name;
   
-  var student = allData.students[studentId];
-  document.getElementById('inp-ac-studentName').textContent = '学员：' + student.name;
-  
-  var select = document.getElementById('inp-ac-teacher');
+  var sel = document.getElementById('inp-ac-teacher');
   var html = '<option value="">选择教师（可选）</option>';
-  Object.values(allData.teachers || {}).forEach(function(t) {
-    html += '<option value="' + t.id + '">' + escHtml(t.name) + '</option>';
-  });
-  select.innerHTML = html;
+  for (var k in DB.teachers) {
+    html += '<option value="' + DB.teachers[k].id + '">' + esc(DB.teachers[k].name) + '</option>';
+  }
+  sel.innerHTML = html;
   
-  // 恢复弹窗内容
-  document.getElementById('modal-addCourse').innerHTML = document.getElementById('modal-addCourse').innerHTML;
-  
-  openModal('modal-addCourse');
+  openM('modal-addCourse');
 }
 
 function saveCourse() {
-  var studentId = document.getElementById('inp-ac-studentId').value;
+  var sid = document.getElementById('inp-ac-sid').value;
   var name = document.getElementById('inp-ac-name').value.trim();
   var hours = parseInt(document.getElementById('inp-ac-hours').value) || 0;
-  var teacherId = document.getElementById('inp-ac-teacher').value;
+  var tid = document.getElementById('inp-ac-teacher').value;
   
   if (!name) { toast('请输入课程名称'); return; }
   if (hours < 1) { toast('请输入课时数量'); return; }
   
-  var student = allData.students[studentId];
-  if (!student.courses) student.courses = [];
+  var st = DB.students[sid];
+  if (!st.courses) st.courses = [];
+  st.courses.push({ name: name, total: hours, remaining: hours, teacherId: tid || null });
+  saveData(DB);
   
-  student.courses.push({
-    name: name,
-    total: hours,
-    remaining: hours,
-    teacherId: teacherId || null
-  });
-  
-  setLocalData(allData);
-  closeModal('modal-addCourse');
+  closeM('modal-addCourse');
   toast('已添加课程：' + name);
   renderStudents();
-  renderDashboard();
+  renderDash();
 }
 
-function openEditStudent(studentId) {
-  var student = allData.students[studentId];
-  document.getElementById('inp-es-id').value = studentId;
-  document.getElementById('inp-es-name').value = student.name;
+function openEditStudent(sid) {
+  var st = DB.students[sid];
+  document.getElementById('inp-es-id').value = sid;
+  document.getElementById('inp-es-name').value = st.name;
   document.getElementById('inp-es-pass').value = '';
   
-  var courses = student.courses || [];
-  var html = '<div style="margin-top:10px"><label style="display:block;font-size:13px;color:#888;margin-bottom:8px">课程包</label>';
-  
-  if (courses.length > 0) {
-    courses.forEach(function(c, i) {
-      html += '<div class="course-item" style="margin-bottom:6px">' +
-        '<span style="font-size:14px">' + escHtml(c.name) + ' ' + c.remaining + '/' + c.total + '</span>' +
-        '<button class="btn btn-r btn-sm" onclick="removeCourse(\'' + studentId + '\',' + i + ')">删除</button>' +
+  var cs = st.courses || [];
+  var html = '<div style="margin-top:10px"><label style="display:block;font-size:12px;color:#888;margin-bottom:8px">课程包</label>';
+  if (cs.length > 0) {
+    cs.forEach(function(c, i) {
+      html += '<div class="course-item" style="margin-bottom:5px">' +
+        '<span style="font-size:13px">' + esc(c.name) + ' ' + c.remaining + '/' + c.total + '</span>' +
+        '<button class="btn btn-r btn-sm" onclick="removeCourse(\'' + sid + '\',' + i + ')">删除</button>' +
       '</div>';
     });
   } else {
-    html += '<div style="font-size:13px;color:#bbb">暂无课程包</div>';
+    html += '<div style="font-size:12px;color:#bbb">暂无课程包</div>';
   }
-  
   html += '</div>';
-  document.getElementById('inp-es-courses-list').innerHTML = html;
+  document.getElementById('inp-es-courses').innerHTML = html;
   
-  openModal('modal-editStudent');
+  openM('modal-editStudent');
 }
 
-function removeCourse(studentId, courseIdx) {
+function removeCourse(sid, cidx) {
   if (!confirm('确定删除该课程包？')) return;
-  var student = allData.students[studentId];
-  student.courses.splice(courseIdx, 1);
-  setLocalData(allData);
-  openEditStudent(studentId);
+  DB.students[sid].courses.splice(cidx, 1);
+  saveData(DB);
+  openEditStudent(sid);
   renderStudents();
 }
 
 function updateStudent() {
-  var studentId = document.getElementById('inp-es-id').value;
+  var sid = document.getElementById('inp-es-id').value;
   var name = document.getElementById('inp-es-name').value.trim();
-  var password = document.getElementById('inp-es-pass').value;
+  var pass = document.getElementById('inp-es-pass').value;
   
   if (!name) { toast('请输入姓名'); return; }
   
-  var student = allData.students[studentId];
-  student.name = name;
-  
-  if (password) {
-    var account = allData.accounts[studentId];
-    if (account) account.password = password;
+  DB.students[sid].name = name;
+  if (pass) {
+    if (DB.accounts[sid]) DB.accounts[sid].password = pass;
   }
+  saveData(DB);
   
-  setLocalData(allData);
-  closeModal('modal-editStudent');
-  toast('已更新学员信息');
+  closeM('modal-editStudent');
+  toast('已更新');
   renderStudents();
 }
 
 // ===== 教师功能 =====
 function renderTeacherStudents() {
   var list = document.getElementById('teacher-students-list');
-  var myStudents = [];
+  var myStu = [];
   
-  Object.values(allData.students || {}).forEach(function(s) {
+  for (var sid in DB.students) {
+    var s = DB.students[sid];
     if (s.courses) {
       s.courses.forEach(function(c, idx) {
-        if (c.teacherId === currentUser.id && c.remaining > 0) {
-          myStudents.push({ student: s, course: c, courseIdx: idx });
+        if (c.teacherId === curUser.id && c.remaining > 0) {
+          myStu.push({ student: s, course: c, cidx: idx });
         }
       });
     }
-  });
+  }
   
-  if (myStudents.length === 0) {
+  if (myStu.length === 0) {
     list.innerHTML = '<div class="empty"><div class="empty-icon">👨‍🎓</div><div class="empty-text">暂无分配的学员或课程已用完</div></div>';
     return;
   }
   
-  list.innerHTML = myStudents.map(function(item) {
+  list.innerHTML = myStu.map(function(item) {
     return '<div class="card">' +
-      '<div class="card-header">' +
-        '<span class="card-name">' + escHtml(item.student.name) + '</span>' +
+      '<div class="card-hdr">' +
+        '<span class="card-name">' + esc(item.student.name) + '</span>' +
         '<span class="tag tag-g">剩余 ' + item.course.remaining + ' 课时</span>' +
       '</div>' +
-      '<div class="card-info">' + escHtml(item.course.name) + '</div>' +
+      '<div class="card-info">' + esc(item.course.name) + '</div>' +
       '<div class="card-actions">' +
-        '<button class="btn btn-g" onclick="openAddLesson(\'' + item.student.id + '\',' + item.courseIdx + ')">📝 记录上课</button>' +
+        '<button class="btn btn-g" onclick="openAddLesson(\'' + item.student.id + '\',' + item.cidx + ')">📝 记录上课</button>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -790,101 +667,98 @@ function renderTeacherStudents() {
 
 function renderTeacherLessons() {
   var list = document.getElementById('teacher-lessons-list');
-  var myLessons = (allData.lessons || []).filter(function(l) {
-    return l.teacherId === currentUser.id;
-  }).sort(function(a, b) { return new Date(b.lessonDate) - new Date(a.lessonDate); });
+  var ls = DB.lessons.filter(function(l) { return l.teacherId === curUser.id; })
+    .sort(function(a,b) { return new Date(b.lessonDate) - new Date(a.lessonDate); });
   
-  if (myLessons.length === 0) {
+  if (ls.length === 0) {
     list.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">暂无上课记录</div></div>';
     return;
   }
   
-  list.innerHTML = myLessons.map(function(l) {
-    var student = allData.students[l.studentId] || {};
+  list.innerHTML = ls.map(function(l) {
+    var st = DB.students[l.studentId] || {};
     return '<div class="lesson-item">' +
-      '<div class="lesson-date">📅 ' + formatDate(l.lessonDate) + ' · ' + escHtml(student.name || '') + '</div>' +
-      '<div class="lesson-course">' + escHtml(l.courseName || '') + '</div>' +
-      '<div class="lesson-feedback">' + (l.feedback || '无反馈') + '</div>' +
+      '<div class="lesson-d">📅 ' + dt(l.lessonDate) + ' · ' + esc(st.name||'') + '</div>' +
+      '<div class="lesson-c">' + esc(l.courseName||'') + '</div>' +
+      '<div class="lesson-f">' + esc(l.feedback||'无反馈') + '</div>' +
     '</div>';
   }).join('');
 }
 
-function openAddLesson(studentId, courseIdx) {
-  var student = allData.students[studentId];
-  var course = student.courses[courseIdx];
+function openAddLesson(sid, cidx) {
+  var st = DB.students[sid];
+  var c = st.courses[cidx];
   
-  document.getElementById('inp-al-studentId').value = studentId;
-  document.getElementById('inp-al-courseIdx').value = courseIdx;
-  document.getElementById('inp-al-studentName2').textContent = student.name;
-  document.getElementById('inp-al-courseName2').textContent = course.name + ' (剩余 ' + course.remaining + ' 课时)';
+  document.getElementById('inp-al-sid').value = sid;
+  document.getElementById('inp-al-cidx').value = cidx;
+  document.getElementById('inp-al-sname2').textContent = st.name;
+  document.getElementById('inp-al-cname2').textContent = c.name + ' (剩余 ' + c.remaining + ' 课时)';
   
   var now = new Date();
-  var pad = function(n) { return n < 10 ? '0' + n : n; };
-  document.getElementById('inp-al-date').value = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) + 'T' + pad(now.getHours()) + ':' + pad(now.getMinutes());
-  
+  var p = function(n) { return n < 10 ? '0' + n : n; };
+  document.getElementById('inp-al-date').value = now.getFullYear() + '-' + p(now.getMonth()+1) + '-' + p(now.getDate()) + 'T' + p(now.getHours()) + ':' + p(now.getMinutes());
   document.getElementById('inp-al-feedback').value = '';
   
-  openModal('modal-addLesson');
+  openM('modal-addLesson');
 }
 
 function saveLesson() {
-  var studentId = document.getElementById('inp-al-studentId').value;
-  var courseIdx = parseInt(document.getElementById('inp-al-courseIdx').value);
-  var lessonDate = document.getElementById('inp-al-date').value;
-  var feedback = document.getElementById('inp-al-feedback').value.trim();
+  var sid = document.getElementById('inp-al-sid').value;
+  var cidx = parseInt(document.getElementById('inp-al-cidx').value);
+  var date = document.getElementById('inp-al-date').value;
+  var fb = document.getElementById('inp-al-feedback').value.trim();
   
-  if (!lessonDate) { toast('请选择上课时间'); return; }
-  if (!feedback) { toast('请填写课堂反馈'); return; }
+  if (!date) { toast('请选择上课时间'); return; }
+  if (!fb) { toast('请填写课堂反馈'); return; }
   
-  var student = allData.students[studentId];
-  var course = student.courses[courseIdx];
+  var c = DB.students[sid].courses[cidx];
+  if (c.remaining <= 0) { toast('该课程已无剩余课时'); return; }
   
-  if (course.remaining <= 0) { toast('该课程已无剩余课时'); return; }
+  c.remaining--;
   
-  course.remaining--;
-  
-  allData.lessons.push({
+  DB.lessons.push({
     id: 'l' + Date.now(),
-    studentId: studentId,
-    courseIdx: courseIdx,
-    courseName: course.name,
-    teacherId: currentUser.id,
-    lessonDate: lessonDate,
-    feedback: feedback,
+    studentId: sid,
+    courseIdx: cidx,
+    courseName: c.name,
+    teacherId: curUser.id,
+    lessonDate: date,
+    feedback: fb,
     createdAt: new Date().toISOString()
   });
   
-  setLocalData(allData);
-  closeModal('modal-addLesson');
-  toast('已记录上课！剩余 ' + course.remaining + ' 课时');
+  saveData(DB);
+  closeM('modal-addLesson');
+  toast('已记录上课！剩余 ' + c.remaining + ' 课时');
   renderTeacherStudents();
   renderTeacherLessons();
-  renderDashboard();
+  renderDash();
 }
 
 // ===== 学生功能 =====
 function renderStudentCourses() {
   var list = document.getElementById('student-courses-list');
-  var student = allData.students[currentUser.id];
+  var st = DB.students[curUser.id];
   
-  if (!student || !student.courses || student.courses.length === 0) {
+  if (!st || !st.courses || st.courses.length === 0) {
     list.innerHTML = '<div class="empty"><div class="empty-icon">📚</div><div class="empty-text">暂无课程</div></div>';
     return;
   }
   
-  list.innerHTML = student.courses.map(function(c) {
-    var teacher = c.teacherId ? (allData.teachers[c.teacherId] || {}) : null;
+  list.innerHTML = st.courses.map(function(c) {
+    var t = c.teacherId ? DB.teachers[c.teacherId] : null;
+    var pct = Math.round((c.remaining / c.total) * 100);
     return '<div class="card">' +
-      '<div class="card-header">' +
-        '<span class="card-name">' + escHtml(c.name) + '</span>' +
+      '<div class="card-hdr">' +
+        '<span class="card-name">' + esc(c.name) + '</span>' +
         '<span class="tag ' + (c.remaining > 0 ? 'tag-g' : 'tag-o') + '">' + c.remaining + '/' + c.total + '</span>' +
       '</div>' +
-      '<div class="card-info">👩‍🏫 教师：' + (teacher ? escHtml(teacher.name) : '待分配') + '</div>' +
+      '<div class="card-info">👩‍🏫 教师：' + (t ? esc(t.name) : '待分配') + '</div>' +
       '<div style="margin-top:10px">' +
-        '<div style="height:8px;background:#eee;border-radius:4px;overflow:hidden">' +
-          '<div style="height:100%;width:' + (c.remaining / c.total * 100) + '%;background:linear-gradient(90deg,#1a7a4a,#25a865);border-radius:4px"></div>' +
+        '<div style="height:7px;background:#eee;border-radius:4px;overflow:hidden">' +
+          '<div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,#1a7a4a,#25a865);border-radius:4px"></div>' +
         '</div>' +
-        '<div style="font-size:12px;color:#888;margin-top:6px">已上课 ' + (c.total - c.remaining) + ' 节，剩余 ' + c.remaining + ' 节</div>' +
+        '<div style="font-size:11px;color:#999;margin-top:5px">已上课 ' + (c.total - c.remaining) + ' 节</div>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -892,73 +766,72 @@ function renderStudentCourses() {
 
 function renderStudentFeedbacks() {
   var list = document.getElementById('student-feedbacks-list');
-  var myFeedbacks = (allData.lessons || []).filter(function(l) {
-    return l.studentId === currentUser.id;
-  }).sort(function(a, b) { return new Date(b.lessonDate) - new Date(a.lessonDate); });
+  var ls = DB.lessons.filter(function(l) { return l.studentId === curUser.id; })
+    .sort(function(a,b) { return new Date(b.lessonDate) - new Date(a.lessonDate); });
   
-  if (myFeedbacks.length === 0) {
+  if (ls.length === 0) {
     list.innerHTML = '<div class="empty"><div class="empty-icon">💬</div><div class="empty-text">暂无课堂反馈</div></div>';
     return;
   }
   
-  list.innerHTML = myFeedbacks.map(function(l) {
-    var teacher = allData.teachers[l.teacherId] || {};
+  list.innerHTML = ls.map(function(l) {
+    var t = DB.teachers[l.teacherId] || {};
     return '<div class="lesson-item">' +
-      '<div class="lesson-date">📅 ' + formatDate(l.lessonDate) + (teacher.name ? ' · 👩‍🏫 ' + escHtml(teacher.name) : '') + '</div>' +
-      '<div class="lesson-course">' + escHtml(l.courseName || '') + '</div>' +
-      '<div class="lesson-feedback">' + (l.feedback || '无反馈') + '</div>' +
+      '<div class="lesson-d">📅 ' + dt(l.lessonDate) + (t.name ? ' · 👩‍🏫 ' + esc(t.name) : '') + '</div>' +
+      '<div class="lesson-c">' + esc(l.courseName||'') + '</div>' +
+      '<div class="lesson-f">' + esc(l.feedback||'无反馈') + '</div>' +
     '</div>';
   }).join('');
 }
 
 // ===== 数据同步 =====
 function exportData() {
-  var dataStr = JSON.stringify(allData);
-  var encoded = btoa(unescape(encodeURIComponent(dataStr)));
-  
+  var str = JSON.stringify(DB);
+  var enc = btoa(unescape(encodeURIComponent(str)));
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(encoded).then(function() {
-      toast('数据已复制！请妥善保存');
-      document.getElementById('syncData').value = encoded;
+    navigator.clipboard.writeText(enc).then(function() {
+      toast('数据已复制！');
+      document.getElementById('syncData').value = enc;
     }).catch(function() {
-      document.getElementById('syncData').value = encoded;
+      document.getElementById('syncData').value = enc;
       toast('请手动复制上方数据');
     });
   } else {
-    document.getElementById('syncData').value = encoded;
+    document.getElementById('syncData').value = enc;
     toast('请手动复制上方数据');
   }
 }
 
 function importData() {
-  var encoded = document.getElementById('syncData').value.trim();
-  if (!encoded) { toast('请先粘贴数据'); return; }
-  
+  var enc = document.getElementById('syncData').value.trim();
+  if (!enc) { toast('请先粘贴数据'); return; }
   try {
-    var decoded = decodeURIComponent(escape(atob(encoded)));
-    var data = JSON.parse(decoded);
-    
+    var dec = decodeURIComponent(escape(atob(enc)));
+    var data = JSON.parse(dec);
     if (data.accounts && data.students !== undefined && data.teachers !== undefined) {
-      allData = data;
-      setLocalData(allData);
+      DB = data;
+      saveData(DB);
       toast('数据导入成功！');
       document.getElementById('syncData').value = '';
-      if (currentUser) showApp();
+      if (curUser) showApp();
     } else {
       toast('数据格式错误');
     }
-  } catch(e) {
-    toast('导入失败');
-  }
+  } catch(e) { toast('导入失败'); }
 }
 
 // ===== 页面加载 =====
 window.onload = function() {
-  ensureData();
-  var saved = sessionStorage.getItem('crm_user');
+  // 确保数据存在
+  if (!DB) resetDB();
+  // 自动填充账号密码
+  document.getElementById('lu').value = 'admin';
+  document.getElementById('lp').value = 'admin123';
+  // 恢复会话
+  var saved = sessionStorage.getItem('crm_session');
   if (saved) {
     try {
-      currentUser = JSON.parse(saved);
+      curUser = JSON.parse(saved);
       showApp();
     } catch(e) {}
   }
