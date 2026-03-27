@@ -373,6 +373,8 @@ function showApp() {
   document.getElementById('teacherTabs').classList.add('hidden');
   document.getElementById('studentTabs').classList.add('hidden');
   
+  console.log('当前用户角色:', currentUser.role, '用户:', currentUser.name);
+  
   if (currentUser.role === 'admin') {
     document.getElementById('adminTabs').classList.remove('hidden');
     document.getElementById('curRole').textContent = '👑 管理员';
